@@ -7,5 +7,6 @@ public class ButtonActions : MonoBehaviour {
 
     public void OnPlay() {
         SceneManager.LoadScene("OptionScreen");
+
 	}
 }
