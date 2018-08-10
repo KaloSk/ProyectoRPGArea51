@@ -323,6 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: {fileID: 428727834}
   warning: {fileID: 241122036}
+  indice: 2
 --- !u!1 &241122036
 GameObject:
   m_ObjectHideFlags: 0

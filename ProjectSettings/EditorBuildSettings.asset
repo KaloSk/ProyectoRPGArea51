@@ -4,5 +4,29 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/0_Intro.unity
+    guid: d5fa983ddeeb24f038001a5044546f50
+  - enabled: 1
+    path: Assets/Scenes/1_NewGame.unity
+    guid: f9c01bb25d3f84348a5350979eafcb7e
+  - enabled: 1
+    path: Assets/Scenes/2_Game.unity
+    guid: 7415f61914389424fa41e88f893a6a63
+  - enabled: 1
+    path: Assets/Scenes/3A_Shop.unity
+    guid: 4878e42bffeb549f3b580591db191c2d
+  - enabled: 1
+    path: Assets/Scenes/3B_Inventory.unity
+    guid: ad2678ce30c50407cb98f9faabceaa5a
+  - enabled: 1
+    path: Assets/Scenes/4_Map.unity
+    guid: 14248616268e541ecbf23a63c23472cd
+  - enabled: 1
+    path: Assets/Scenes/A_OptionScreen.unity
+    guid: 044a225e79ec34df8a4c65b3540e48e4
+  - enabled: 1
+    path: Assets/Scenes/Z_EasterEgg.unity
+    guid: 701294df7642f4230b45d69a734b4018
   m_configObjects: {}
