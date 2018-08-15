@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/4_Map.unity
     guid: 14248616268e541ecbf23a63c23472cd
   - enabled: 1
+    path: Assets/Scenes/5_Batalla.unity
+    guid: dd805025e24124bb1aa7f190c23742c8
+  - enabled: 1
     path: Assets/Scenes/A_OptionScreen.unity
     guid: 044a225e79ec34df8a4c65b3540e48e4
   - enabled: 1
