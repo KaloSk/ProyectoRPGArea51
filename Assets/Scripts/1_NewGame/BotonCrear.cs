@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BotonCrear : MonoBehaviour {
 
+    public static string nameSave;
     public InputField name;
     public GameObject warning;
     public int indice;
@@ -15,6 +16,7 @@ public class BotonCrear : MonoBehaviour {
             warning.SetActive (true);
         }
         else{
+            nameSave = name.text;
             SceneManager.LoadScene(indice);
         }
     }
