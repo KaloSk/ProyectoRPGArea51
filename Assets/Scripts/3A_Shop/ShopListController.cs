@@ -41,13 +41,13 @@ public class ShopListController : MonoBehaviour {
         //    add it to panel
         foreach (ShopItem shopItem in ItemsInShop)
         {
-            GameObject newShopItem = Instantiate(ListItemPrefab) as GameObject;
+            /*GameObject newShopItem = Instantiate(ListItemPrefab) as GameObject;
             ShopListItemControler controller = newShopItem.GetComponent();
             controller.Icon.sprite = shopItem.Icon;
             controller.Name.text = shopItem.Name;
             controller.Description.text = shopItem.Description;
             newShopItem.transform.parent = ContentPanel.transform;
-            newShopItem.transform.localScale = Vector3.one;
+            newShopItem.transform.localScale = Vector3.one;*/
         }
     }
 }
