@@ -16,22 +16,22 @@ public class ShopListController : MonoBehaviour {
         // 1. Get the data to be displayed
         ItemsInShop = new ArrayList(){
             new ShopItem(ItemImages[0],
-                       "Cat",
+                       "PocionVerde",
                        "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
             new ShopItem(ItemImages[1],
-                       "Dog",
+                       "PocionAzul",
                        "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
             new ShopItem(ItemImages[2],
-                       "Fish",
+                       "Objeto",
                        "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
             new ShopItem(ItemImages[3],
-                       "Parrot",
+                       "Objeto2",
                        "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
             new ShopItem(ItemImages[4],
-                       "Rabbit",
+                       "Objeto3",
                        "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
             new ShopItem(ItemImages[5],
-                       "Snail",
+                       "Objeto4",
                        "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0")
         };
 
@@ -41,13 +41,13 @@ public class ShopListController : MonoBehaviour {
         //    add it to panel
         foreach (ShopItem shopItem in ItemsInShop)
         {
-            /*GameObject newShopItem = Instantiate(ListItemPrefab) as GameObject;
+            GameObject newShopItem = Instantiate(ListItemPrefab) as GameObject;
             ShopListItemControler controller = newShopItem.GetComponent();
             controller.Icon.sprite = shopItem.Icon;
             controller.Name.text = shopItem.Name;
             controller.Description.text = shopItem.Description;
             newShopItem.transform.parent = ContentPanel.transform;
-            newShopItem.transform.localScale = Vector3.one;*/
+            newShopItem.transform.localScale = Vector3.one;
         }
     }
 }
