@@ -17,10 +17,10 @@ public class ShopListController : MonoBehaviour {
         ItemsInShop = new ArrayList(){
             new ShopItem(ItemImages[0],
                        "PocionVerde",
-                       "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
+                       "Heals\t:\t10HP\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
             new ShopItem(ItemImages[1],
                        "PocionAzul",
-                       "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
+                       "Restores\t:\t10MP\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
             new ShopItem(ItemImages[2],
                        "Objeto",
                        "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
