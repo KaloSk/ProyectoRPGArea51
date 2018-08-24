@@ -48,8 +48,8 @@ public class RTP : MonoBehaviour {
             Name = "Prueba 2",
             Equipment = null,
             Formation = 1,
-            Sprite = characterLoadedList[0].GetComponent<Sprite>(),
-            Animator = characterLoadedList[0].GetComponent<Animator>().runtimeAnimatorController,
+            Sprite = characterLoadedList[1].GetComponent<Sprite>(),
+            Animator = characterLoadedList[1].GetComponent<Animator>().runtimeAnimatorController,
             Position = CharacterFormation(1),
             Type = "T",
             Stats = new Stats()
@@ -72,8 +72,8 @@ public class RTP : MonoBehaviour {
             Name = "Prueba 3",
             Equipment = null,
             Formation = 2,
-            Sprite = characterLoadedList[0].GetComponent<Sprite>(),
-            Animator = characterLoadedList[0].GetComponent<Animator>().runtimeAnimatorController,
+            Sprite = characterLoadedList[2].GetComponent<Sprite>(),
+            Animator = characterLoadedList[2].GetComponent<Animator>().runtimeAnimatorController,
             Position = CharacterFormation(2),
             Type = "T",
             Stats = new Stats()
@@ -102,7 +102,7 @@ public class RTP : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+        /*
         if(characterLoaded==1){
 
             Debug.Log("D2: " + characterList.Count);
@@ -132,7 +132,7 @@ public class RTP : MonoBehaviour {
                 target1.GetComponent<Animator>().SetTrigger("DealDamage");
                 stopAction = true;
             } 
-        }
+        }*/
 	}
 
     int defaultX = -2;
