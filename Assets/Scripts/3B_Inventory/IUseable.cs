@@ -5,8 +5,9 @@ using System.Text;
 using UnityEngine;
 
 public interface IUseable
+
 {
-	Sprite MyIcon
+	Sprite MyIcon	
 	{
 		get;
 	}

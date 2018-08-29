@@ -1,4 +1,4 @@
-﻿/*using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +8,14 @@ using UnityEngine;
 
 	private int slots;
 
+	public Sprite MyIcon{
+		get;
+	}
+
 	[SerializeField]
 	private GameObject bagPrefab;
 
 	public BagScript MyBagScript { get; set; }
-
 
 	public int Slots
 	{
@@ -33,4 +36,3 @@ using UnityEngine;
 		MyBagScript.AddSlots(slots);
 	}
 }
-*/
