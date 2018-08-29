@@ -1,9 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class RTP : MonoBehaviour {
 
+    public List<Character> turn;
+
+    int characterTurn = 0;
+    int battleStatus = 0;
+    int targetSelected = 0;
 
     float C_ZERO = 0f;
 
@@ -14,6 +21,11 @@ public class RTP : MonoBehaviour {
     public List<GameObject> characterLoadedList;
     List<Character> characterList = new List<Character>();
     int characterLoaded = 0;
+
+    [Header("BattleMenu")]
+    public List<Button> battleMenuButton;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -60,7 +72,7 @@ public class RTP : MonoBehaviour {
                 DEF = 10,
                 MAG = 0,
                 MDF = 5,
-                SPE = 15,
+                SPE = 10,
                 LUK = 0
             }
         };
@@ -84,15 +96,28 @@ public class RTP : MonoBehaviour {
                 DEF = 10,
                 MAG = 0,
                 MDF = 5,
-                SPE = 15,
+                SPE = 20,
                 LUK = 0
             }
         };
         characterList.Add(character);
 
-        Debug.Log("D1: " + characterList.Count);
+        Debug.Log("D1: " + battleMenuButton.Count);
+        
+        for (int i = 0; i < battleMenuButton.Count; i++) {
+            var newi = i+1;
+            UnityAction<int> action = new UnityAction<int>(ButtonDoAction);
+            battleMenuButton[i].onClick.AddListener(delegate { action.Invoke(newi); });
+        }
 
-	}
+        if(turn == null) {
+            turn = new List<Character>();
+
+            turn.AddRange(characterList);
+            
+        }
+
+    }
 
 
 
@@ -116,23 +141,26 @@ public class RTP : MonoBehaviour {
            
         }
         characterLoaded++;
-        if(!stopAction){
-            float distanceTarget = Vector2.Distance(target1.position, target2TP.position);
-            if (distanceTarget.CompareTo(C_ZERO) != 0)
-            {
-                target1.position = Vector2.MoveTowards(target1.position, target2TP.position, 5 * Time.deltaTime);
-            }
-            else
-            {
-                targetReach = true;
-            }
+        */
+        var o = GameObject.Find("Enemies");
+        if (battleStatus == 1) { //ATTACK!
 
-            if (targetReach)
+            Debug.Log("XD" + targetSelected);
+
+            if(targetSelected == 1) {
+                stopAction = false;
+                targetReach = false;
+                Attack();
+            }
+            else 
             {
-                target1.GetComponent<Animator>().SetTrigger("DealDamage");
-                stopAction = true;
-            } 
-        }*/
+                o.transform.GetChild(0).GetComponent<Transform>().Find("Damage").gameObject.SetActive(true);
+            }
+        }
+        else 
+        {
+            o.transform.GetChild(0).GetComponent<Transform>().Find("Damage").gameObject.SetActive(false);
+        }
 	}
 
     int defaultX = -2;
@@ -144,4 +172,46 @@ public class RTP : MonoBehaviour {
         Debug.Log(pos);
         return pos;
     }
+
+
+    void ButtonDoAction(int power)
+    {
+        Debug.Log(power);
+        battleStatus = power;
+    }
+
+
+    #region "ACTIONS"
+
+    public void Attack()
+    {
+        if (!stopAction) {
+            float distanceTarget = Vector2.Distance(target1.position, target2TP.position);
+            if (distanceTarget.CompareTo(C_ZERO) != 0) {
+                target1.position = Vector2.MoveTowards(target1.position, target2TP.position, 5 * Time.deltaTime);
+                target1.GetComponent<Animator>().SetBool("Run", true);
+            }
+            else {
+                targetReach = true;
+            }
+
+            if (targetReach) {
+                targetSelected = 0;
+                battleStatus = 0;
+                target1.GetComponent<Animator>().SetTrigger("DealDamage");
+                stopAction = true;
+            }
+        }
+    }
+
+    #endregion
+
+    #region "GETTER AND SETTERS"
+
+    public void SetTargetSelected(int t)
+    {
+        targetSelected = t;
+    }
+
+    #endregion
 }

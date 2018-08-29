@@ -19,6 +19,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	void Update () {
         if(!isInitialPosition){
             Debug.Log("HEY PRRO");
+            transform.GetComponent<Animator>().SetBool("Run", true);
             float distanceTarget = Vector2.Distance(transform.position, initialPosition);
             if (distanceTarget.CompareTo(C_ZERO) != 0)
             {
@@ -27,6 +28,7 @@ public class CharacterBehaviour : MonoBehaviour {
             else
             {
                 isInitialPosition = true;
+                transform.GetComponent<Animator>().SetBool("Run", false);
             }
         }
 	}
