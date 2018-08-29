@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Delete : Personaje {
+public class Personaje : MonoBehaviour {
 
-    public int id;
+    public void apagar(GameObject id){
+        id.SetActive(false);
+    }
 
-    public void OnPlay(){
-        //GameObject.Find("Character" + id);
-        apagar(GameObject.Find("Character" + id).gameObject);
+    public void prender(GameObject id2){
+        id2.SetActive(true);
     }
 
     // Use this for initialization

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Delete : Personaje {
+public class PrenderPersonajes : Personaje {
 
     public int id;
 
     public void OnPlay(){
         //GameObject.Find("Character" + id);
-        apagar(GameObject.Find("Character" + id).gameObject);
+        prender(GameObject.Find("Character" + id).gameObject);
     }
 
     // Use this for initialization
