@@ -6,12 +6,15 @@ using UnityEngine.UI;
 
 public class RTP : MonoBehaviour {
 
+    private AudioSource audioSource;
+
     public List<Character> turn;
 
+    bool changeTurn = true;
     int characterTurn = 0;
     int battleStatus = 0;
     int targetSelected = 0;
-
+    
     float C_ZERO = 0f;
 
     public Transform target1;
@@ -24,17 +27,31 @@ public class RTP : MonoBehaviour {
 
     [Header("BattleMenu")]
     public List<Button> battleMenuButton;
+    public GameObject skillContent;
+    public GameObject prefabPower;
 
+    [Header("SoundsMenu")]
+    public List<AudioClip> soundList;
 
+    /********/
+    [Header("TempListItem")]
+    public List<Sprite> itemSpriteList;
+    public List<Sprite> skillSpriteList;
+    /*******/
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
+
+        GameController gg = new GameController(skillSpriteList);
+
+        audioSource = new AudioSource();
+
         target2TP = target2.Find("TargetPlace").GetComponent<Transform>();
 
         Character character = new Character()
         {
             ID = 1,
-            Name = "Prueba 1",
+            Name = "Cecil",
             Equipment = null,
             Formation = 0,
             Sprite = characterLoadedList[0].GetComponent<Sprite>(),
@@ -45,13 +62,33 @@ public class RTP : MonoBehaviour {
                 HP = 100,
                 MP = 10,
                 ATK = 30,
-                DEF = 10,
-                MAG = 0,
-                MDF = 5,
+                DEF = 20,
+                MAG = 5,
+                MDF = 12,
                 SPE = 15,
-                LUK = 0
+                LUK = 5
+            },
+            Skills = new List<Skill>()
+            {
+                new Skill()
+                {
+                    ID = 1,
+                    Name = "Skill 1",
+                    Damage = 100,
+                    Formula = "ENEMY|DAMAGE|100",
+                    Level = 1,
+                    Icon = skillSpriteList[0],
+                    Type = new SkillType()
+                    {
+                        ID = 1,
+                        Name = "Power"
+                    }
+                }
             }
         };
+
+        character.StatsInGame = character.Stats;
+
         characterList.Add(character);
 
         Character character2 = new Character()
@@ -76,6 +113,9 @@ public class RTP : MonoBehaviour {
                 LUK = 0
             }
         };
+
+        character2.StatsInGame = character2.Stats;
+
         characterList.Add(character);
 
         Character character3 = new Character()
@@ -100,9 +140,12 @@ public class RTP : MonoBehaviour {
                 LUK = 0
             }
         };
+
+        character3.StatsInGame = character3.Stats;
+
         characterList.Add(character);
 
-        Debug.Log("D1: " + battleMenuButton.Count);
+        Debug.Log("D1: " + characterList.Count);
         
         for (int i = 0; i < battleMenuButton.Count; i++) {
             var newi = i+1;
@@ -118,9 +161,7 @@ public class RTP : MonoBehaviour {
         }
 
     }
-
-
-
+    
     Transform target2TP;
     bool targetReach = false;
     bool stopAction = false;
@@ -154,12 +195,33 @@ public class RTP : MonoBehaviour {
             }
             else 
             {
-                o.transform.GetChild(0).GetComponent<Transform>().Find("Damage").gameObject.SetActive(true);
+                o.transform.GetChild(0).GetComponent<Transform>().Find("TargetDamage").gameObject.SetActive(true);
             }
         }
         else 
         {
-            o.transform.GetChild(0).GetComponent<Transform>().Find("Damage").gameObject.SetActive(false);
+            o.transform.GetChild(0).GetComponent<Transform>().Find("TargetDamage").gameObject.SetActive(false);            
+        }
+
+
+        /**[DRAW SKILLS]**/
+        if (changeTurn)
+        {
+            changeTurn = false;
+            var ch = GetCharacterStats(0);
+            for (var i = 0; i < ch.Skills.Count; i++)
+            {   
+                GameObject Prefab = Instantiate(prefabPower);
+                Prefab.transform.GetComponent<Image>().sprite = ch.Skills[i].Icon;
+                Prefab.transform.Find("Panel/Text").GetComponent<Text>().text = ch.Skills[i].Name;
+                
+                /*var newi = i;
+                UnityAction<int> action = new UnityAction<int>(ButtonAddPower);
+                Prefab.transform.Find("Button").GetComponent<Button>().onClick.AddListener(delegate { action.Invoke(newi); });*/
+
+                Prefab.transform.SetParent(skillContent.transform);
+                
+            }
         }
 	}
 
@@ -173,12 +235,28 @@ public class RTP : MonoBehaviour {
         return pos;
     }
 
+    #region "BATTLE MENU"
 
     void ButtonDoAction(int power)
     {
         Debug.Log(power);
         battleStatus = power;
+        PlaySound(BUTTON_CLICK);
+
+        transform.Find("BattlePanel/SkillPanel").GetComponent<Transform>().gameObject.SetActive(false);
+        transform.Find("BattlePanel/ObjectPanel").GetComponent<Transform>().gameObject.SetActive(false);
+
+        if (power.Equals(ACTION_OBJECTS))
+        {
+            transform.Find("BattlePanel/ObjectPanel").GetComponent<Transform>().gameObject.SetActive(true);
+        }
+        else if (power.Equals(ACTION_SKILLS))
+        {
+            transform.Find("BattlePanel/SkillPanel").GetComponent<Transform>().gameObject.SetActive(true);
+        }
     }
+
+    #endregion
 
 
     #region "ACTIONS"
@@ -187,8 +265,8 @@ public class RTP : MonoBehaviour {
     {
         if (!stopAction) {
             float distanceTarget = Vector2.Distance(target1.position, target2TP.position);
-            if (distanceTarget.CompareTo(C_ZERO) != 0) {
-                target1.position = Vector2.MoveTowards(target1.position, target2TP.position, 5 * Time.deltaTime);
+            if (distanceTarget.CompareTo(C_ZERO) != 0) {                
+                target1.position = Vector2.MoveTowards(target1.position, target2TP.position, 7.5f * Time.deltaTime);
                 target1.GetComponent<Animator>().SetBool("Run", true);
             }
             else {
@@ -199,6 +277,7 @@ public class RTP : MonoBehaviour {
                 targetSelected = 0;
                 battleStatus = 0;
                 target1.GetComponent<Animator>().SetTrigger("DealDamage");
+                target2.Find("Damage").GetComponent<Transform>().gameObject.SetActive(true);                
                 stopAction = true;
             }
         }
@@ -213,5 +292,32 @@ public class RTP : MonoBehaviour {
         targetSelected = t;
     }
 
+    public Character GetCharacterStats(int p)
+    {
+        return characterList[p];
+    }
+
     #endregion
+
+    #region "SOUND"
+
+    public void PlaySound(int i)
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.PlayOneShot(soundList[i]);
+    }
+
+    #endregion
+
+    #region "CONSTANTS"
+
+    public const int BUTTON_CLICK = 0;
+
+    public const int ACTION_ATTACK = 1;
+    public const int ACTION_SKILLS = 2;
+    public const int ACTION_OBJECTS = 3;
+    public const int ACTION_RUN = 4;
+
+    #endregion
+
 }

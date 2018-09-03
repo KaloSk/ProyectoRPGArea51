@@ -8,6 +8,10 @@ public class ItemType {
     public bool IsArmor { get; set; }
     public bool IsOther { get; set; }
 
+    public ItemType()
+    {
+    }
+
     public ItemType(int iD, string name, bool isWeapon, bool isArmor, bool isOther)
     {
         ID = iD;
@@ -16,4 +20,5 @@ public class ItemType {
         IsArmor = isArmor;
         IsOther = isOther;
     }
+
 }

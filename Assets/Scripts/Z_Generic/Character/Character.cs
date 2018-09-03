@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Character {
 
@@ -13,6 +14,8 @@ public class Character {
 
     public int Formation { get; set; }
     public Vector3 Position { get; set; }
+
+    public List<Skill> Skills { get; set; }
 
     public Stats StatsInGame { get; set; }
 

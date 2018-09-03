@@ -8,6 +8,6 @@ public class Item  {
     public Sprite Icon { get; set; }
     public string Description { get; set; }
     public string Formula { get; set; }
-    public Stats Stats { get; set; }
+    public Stats Stats { get; set; }    
 
 }

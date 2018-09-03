@@ -10,9 +10,13 @@ public class CharacterBehaviour : MonoBehaviour {
     private Vector2 initialPosition;
     private bool isInitialPosition = true;
 
+    public List<AudioClip> characterSounds;
+    private AudioSource audioSource;
+
 	// Use this for initialization
 	void Start () {
         initialPosition = transform.position;
+        audioSource = new AudioSource();
 	}
 	
 	// Update is called once per frame
@@ -35,5 +39,11 @@ public class CharacterBehaviour : MonoBehaviour {
 
     public void returnOriginalPosition(){
         isInitialPosition = false;
+    }
+
+    public void PlaySound(int i)
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.PlayOneShot(characterSounds[i]);
     }
 }
