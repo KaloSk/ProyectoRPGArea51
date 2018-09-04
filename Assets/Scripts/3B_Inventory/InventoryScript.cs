@@ -19,6 +19,15 @@ public static InventoryScript MyInstance
 	}
 }
 
+	[SerializeField]
+	private ItemV2[] items;
+
+	private void Awake()
+	{
+		Bag bag = (Bag)Instantiate(items[0]);
+		bag.Initialize(20);
+		bag.Use();
+	}
 
 	// Use this for initialization
 	void Start () {

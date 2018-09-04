@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
   [CreateAssetMenu(fileName ="Bag",menuName ="Items/Bag",order = 1)]
-	public class Bag : Item, IUseable
+	public class Bag : ItemV2, IUseable
 {
-
 	private int slots;
+
+	[SerializeField]
+	private GameObject bagPrefab;
 
 	public Sprite MyIcon{
 		get;
 	}
 
-	[SerializeField]
-	private GameObject bagPrefab;
+
 
 	public BagScript MyBagScript { get; set; }
 
