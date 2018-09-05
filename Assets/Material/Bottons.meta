@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Material/Bottons.meta
 guid: 63e631aa6e7b7a74ca35ebbcd2366074
+=======
+guid: 38015372a7a730d42ad094db1e8ef87a
+>>>>>>> e1a847aae8397798040067d760fbed5da8da1801:Assets/Material/Bottons.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
