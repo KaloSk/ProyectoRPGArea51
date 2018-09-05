@@ -17,7 +17,7 @@ public class RTP : MonoBehaviour {
     
     float C_ZERO = 0f;
 
-    public Transform target1;
+    //public Transform target1;
     public Transform target2;
 
     [Header("Characters")]
@@ -51,6 +51,7 @@ public class RTP : MonoBehaviour {
         Character character = new Character()
         {
             ID = 1,
+			TempName = "Player1",
             Name = "Cecil",
             Equipment = null,
             Formation = 0,
@@ -83,7 +84,63 @@ public class RTP : MonoBehaviour {
                         ID = 1,
                         Name = "Power"
                     }
-                }
+                },
+				new Skill()
+				{
+					ID = 1,
+					Name = "Skill 2",
+					Damage = 100,
+					Formula = "ENEMY|DAMAGE|100",
+					Level = 1,
+					Icon = skillSpriteList[1],
+					Type = new SkillType()
+					{
+						ID = 1,
+						Name = "Power"
+					}
+				},
+				new Skill()
+				{
+					ID = 1,
+					Name = "Skill 3",
+					Damage = 100,
+					Formula = "ENEMY|DAMAGE|100",
+					Level = 1,
+					Icon = skillSpriteList[2],
+					Type = new SkillType()
+					{
+						ID = 1,
+						Name = "Power"
+					}
+				},
+				new Skill()
+				{
+					ID = 1,
+					Name = "Skill 4",
+					Damage = 100,
+					Formula = "ENEMY|DAMAGE|100",
+					Level = 1,
+					Icon = skillSpriteList[3],
+					Type = new SkillType()
+					{
+						ID = 1,
+						Name = "Power"
+					}
+				},
+				new Skill()
+				{
+					ID = 1,
+					Name = "Skill 5",
+					Damage = 100,
+					Formula = "ENEMY|DAMAGE|100",
+					Level = 1,
+					Icon = skillSpriteList[4],
+					Type = new SkillType()
+					{
+						ID = 1,
+						Name = "Power"
+					}
+				}
             }
         };
 
@@ -94,7 +151,8 @@ public class RTP : MonoBehaviour {
         Character character2 = new Character()
         {
             ID = 2,
-            Name = "Prueba 2",
+			TempName = "Player2",
+            Name = "Kain",
             Equipment = null,
             Formation = 1,
             Sprite = characterLoadedList[1].GetComponent<Sprite>(),
@@ -116,12 +174,13 @@ public class RTP : MonoBehaviour {
 
         character2.StatsInGame = character2.Stats;
 
-        characterList.Add(character);
+        characterList.Add(character2);
 
         Character character3 = new Character()
         {
             ID = 1,
-            Name = "Prueba 3",
+			TempName = "Player3",
+            Name = "Edge",
             Equipment = null,
             Formation = 2,
             Sprite = characterLoadedList[2].GetComponent<Sprite>(),
@@ -143,7 +202,7 @@ public class RTP : MonoBehaviour {
 
         character3.StatsInGame = character3.Stats;
 
-        characterList.Add(character);
+        characterList.Add(character3);
 
         Debug.Log("D1: " + characterList.Count);
         
@@ -157,6 +216,9 @@ public class RTP : MonoBehaviour {
             turn = new List<Character>();
 
             turn.AddRange(characterList);
+
+
+			turn.Sort((first, second) => second.Stats.SPE.CompareTo(first.Stats.SPE));
             
         }
 
@@ -191,7 +253,8 @@ public class RTP : MonoBehaviour {
             if(targetSelected == 1) {
                 stopAction = false;
                 targetReach = false;
-                Attack();
+				Attack(GameObject.Find(GetCharacterTurn(characterTurn).TempName).GetComponent<Transform>());
+
             }
             else 
             {
@@ -207,21 +270,24 @@ public class RTP : MonoBehaviour {
         /**[DRAW SKILLS]**/
         if (changeTurn)
         {
+
             changeTurn = false;
-            var ch = GetCharacterStats(0);
-            for (var i = 0; i < ch.Skills.Count; i++)
-            {   
-                GameObject Prefab = Instantiate(prefabPower);
-                Prefab.transform.GetComponent<Image>().sprite = ch.Skills[i].Icon;
-                Prefab.transform.Find("Panel/Text").GetComponent<Text>().text = ch.Skills[i].Name;
-                
-                /*var newi = i;
+            var ch = GetCharacterTurn(characterTurn);
+			if (ch.Skills != null) {
+				for (var i = 0; i < ch.Skills.Count; i++)
+				{   
+					GameObject Prefab = Instantiate(prefabPower);
+					Prefab.transform.GetComponent<Image>().sprite = ch.Skills[i].Icon;
+					Prefab.transform.Find("Panel/Text").GetComponent<Text>().text = ch.Skills[i].Name;
+
+					/*var newi = i;
                 UnityAction<int> action = new UnityAction<int>(ButtonAddPower);
                 Prefab.transform.Find("Button").GetComponent<Button>().onClick.AddListener(delegate { action.Invoke(newi); });*/
 
-                Prefab.transform.SetParent(skillContent.transform);
-                
-            }
+					Prefab.transform.SetParent(skillContent.transform);
+
+				}
+			}           
         }
 	}
 
@@ -246,14 +312,17 @@ public class RTP : MonoBehaviour {
         transform.Find("BattlePanel/SkillPanel").GetComponent<Transform>().gameObject.SetActive(false);
         transform.Find("BattlePanel/ObjectPanel").GetComponent<Transform>().gameObject.SetActive(false);
 
-        if (power.Equals(ACTION_OBJECTS))
-        {
-            transform.Find("BattlePanel/ObjectPanel").GetComponent<Transform>().gameObject.SetActive(true);
-        }
-        else if (power.Equals(ACTION_SKILLS))
-        {
-            transform.Find("BattlePanel/SkillPanel").GetComponent<Transform>().gameObject.SetActive(true);
-        }
+		if (power.Equals (ACTION_OBJECTS)) {
+			transform.Find ("BattlePanel/ObjectPanel").GetComponent<Transform> ().gameObject.SetActive (true);
+		} else if (power.Equals (ACTION_SKILLS)) {
+			transform.Find ("BattlePanel/SkillPanel").GetComponent<Transform> ().gameObject.SetActive (true);
+		} else if (power.Equals (ACTION_RUN)) {
+			GameObject.Find("Player1").GetComponent<Animator>().SetBool("Win", true);
+			GameObject.Find("Player2").GetComponent<Animator>().SetBool("Win", true);
+			GameObject.Find("Player3").GetComponent<Animator>().SetBool("Win", true);
+			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().Stop ();
+			PlaySound (1);
+		}
     }
 
     #endregion
@@ -261,7 +330,7 @@ public class RTP : MonoBehaviour {
 
     #region "ACTIONS"
 
-    public void Attack()
+	public void Attack(Transform target1)
     {
         if (!stopAction) {
             float distanceTarget = Vector2.Distance(target1.position, target2TP.position);
@@ -279,6 +348,19 @@ public class RTP : MonoBehaviour {
                 target1.GetComponent<Animator>().SetTrigger("DealDamage");
                 target2.Find("Damage").GetComponent<Transform>().gameObject.SetActive(true);                
                 stopAction = true;
+
+
+				//CHANGE TURN//
+				characterTurn++;
+
+				if (characterTurn == turn.Count) {
+					characterTurn = 0;
+				}
+
+				changeTurn = true;
+				Debug.Log ("CHANGE TURN");
+
+
             }
         }
     }
@@ -296,6 +378,16 @@ public class RTP : MonoBehaviour {
     {
         return characterList[p];
     }
+
+	public Character GetCharacterTurn(int p)
+	{
+		return turn[p];
+	}
+
+	public int GetCharacterTurn()
+	{
+		return characterTurn;
+	}
 
     #endregion
 

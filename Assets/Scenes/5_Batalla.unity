@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 8
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,7 +39,6 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
-  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -55,10 +54,11 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
-    m_AtlasSize: 1024
+    m_TextureWidth: 1024
+    m_TextureHeight: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 39819799}
   - component: {fileID: 39819798}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -543,7 +543,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -685,7 +684,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -898,7 +896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aca1e56433cf41a9ade404fb6aa261c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target1: {fileID: 788084098}
   target2: {fileID: 1874318664}
   characterLoadedList:
   - {fileID: 1120455794989368, guid: 775cb91490ee93a418c547f276d5a414, type: 2}
@@ -913,6 +910,8 @@ MonoBehaviour:
   prefabPower: {fileID: 1504203119489426, guid: a6899a3dba7fc0647a4a798891a6bf9a,
     type: 2}
   soundList:
+  - {fileID: 8300000, guid: 588ab01fb11959d40b9fcacd7119e931, type: 3}
+  - {fileID: 8300000, guid: 11adba9958c082943bd80c6ad527b8fd, type: 3}
   - {fileID: 8300000, guid: 588ab01fb11959d40b9fcacd7119e931, type: 3}
   itemSpriteList:
   - {fileID: 21300000, guid: 33cddcd61e69144449b696d94a079e64, type: 3}
@@ -936,11 +935,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4529ec1f96075cf43abd428185f25409, type: 3}
   - {fileID: 21300000, guid: 5c4776b41296bde47b4e2daec3625848, type: 3}
   skillSpriteList:
-  - {fileID: 21300000, guid: 802fef9c486daa64caf4b04bb8e3d62a, type: 3}
-  - {fileID: 21300000, guid: 66502b2534ea78641bc7a1e2250da2ff, type: 3}
-  - {fileID: 21300000, guid: 27f043dc285fdac4fb0979b9a920e9c8, type: 3}
-  - {fileID: 21300000, guid: 714e7d26ede29c74d94d03f3977651bc, type: 3}
-  - {fileID: 21300000, guid: f19e0fe94a8f98844b91a52c9c9c769b, type: 3}
+  - {fileID: 21300000, guid: c4880cdf3f4407341bc250fe7c31a6e5, type: 3}
+  - {fileID: 21300002, guid: c4880cdf3f4407341bc250fe7c31a6e5, type: 3}
+  - {fileID: 21300004, guid: c4880cdf3f4407341bc250fe7c31a6e5, type: 3}
+  - {fileID: 21300006, guid: c4880cdf3f4407341bc250fe7c31a6e5, type: 3}
+  - {fileID: 21300010, guid: c4880cdf3f4407341bc250fe7c31a6e5, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -975,72 +974,57 @@ AudioSource:
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 1
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!1 &125710629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2230,7 +2214,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -3243,7 +3226,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -3866,72 +3848,57 @@ AudioSource:
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 1
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!1 &907951401
 GameObject:
   m_ObjectHideFlags: 0
@@ -3985,7 +3952,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 136a70a6551eb2d4d839225f8fde76ba, type: 3}
   m_StaticBatchInfo:
@@ -4037,7 +4003,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &907951406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6186,7 +6151,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000020261334}
+  m_AnchoredPosition: {x: 0, y: 0.0000090013655}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1456244416
@@ -6836,11 +6801,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 212537970306005224, guid: fcadc1b112508044f9d4542ddb0d1bdb,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fcadc1b112508044f9d4542ddb0d1bdb, type: 2}
   m_IsPrefabParent: 0
@@ -6947,7 +6907,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -6969,7 +6928,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 58785f51973e90e4aa7cabf3e35fbeda, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 299616eeea1548943a0a29bac56322e6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7545,6 +7504,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 589639874}
     m_Modifications:
+    - target: {fileID: 114977373313150420, guid: a07bc66a6cbfe2547a2c5ce5eacd1632,
+        type: 2}
+      propertyPath: characterSounds.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4987040774764080, guid: a07bc66a6cbfe2547a2c5ce5eacd1632, type: 2}
       propertyPath: m_LocalPosition.x
       value: -6
@@ -7576,6 +7540,21 @@ Prefab:
     - target: {fileID: 4987040774764080, guid: a07bc66a6cbfe2547a2c5ce5eacd1632, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114977373313150420, guid: a07bc66a6cbfe2547a2c5ce5eacd1632,
+        type: 2}
+      propertyPath: characterSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9ff7c59ad0f49124d8351ff772facdb7, type: 3}
+    - target: {fileID: 82010602601632958, guid: a07bc66a6cbfe2547a2c5ce5eacd1632,
+        type: 2}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82010602601632958, guid: a07bc66a6cbfe2547a2c5ce5eacd1632,
+        type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a07bc66a6cbfe2547a2c5ce5eacd1632, type: 2}
@@ -8027,7 +8006,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -8076,7 +8054,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1910131942
 GameObject:
   m_ObjectHideFlags: 0
@@ -8315,7 +8292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2062910893
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8353,7 +8330,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:

@@ -1,11 +1,15 @@
 fileFormatVersion: 2
-guid: 5af04c1b7fa8d564ea7aa2a8ae542f33
+guid: c4880cdf3f4407341bc250fe7c31a6e5
+timeCreated: 1536106293
+licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: 204001103_win_0
-    21300002: 204001103_win_1
-    21300004: 204001103_win_2
-    21300006: 204001103_win_3
+    21300000: Power_tank_0
+    21300002: Power_tank_1
+    21300004: Power_tank_2
+    21300006: Power_tank_3
+    21300008: Power_tank_3
+    21300010: Power_tank_4
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -82,57 +86,71 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 204001103_win_0
+      name: Power_tank_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 77
-        width: 62
-        height: 77
-      alignment: 9
-      pivot: {x: 0.53, y: 0.38}
+        x: 151
+        y: 1092
+        width: 420
+        height: 416
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: 204001103_win_1
+      name: Power_tank_1
       rect:
         serializedVersion: 2
-        x: 62
-        y: 77
-        width: 62
-        height: 77
-      alignment: 9
-      pivot: {x: 0.53, y: 0.38}
+        x: 619
+        y: 1092
+        width: 420
+        height: 416
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: 204001103_win_2
+      name: Power_tank_2
       rect:
         serializedVersion: 2
-        x: 124
-        y: 77
-        width: 62
-        height: 77
-      alignment: 9
-      pivot: {x: 0.53, y: 0.38}
+        x: 1074
+        y: 1092
+        width: 420
+        height: 416
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: 204001103_win_3
+      name: Power_tank_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 62
-        height: 77
-      alignment: 9
-      pivot: {x: 0.53, y: 0.38}
+        x: 161
+        y: 642
+        width: 420
+        height: 416
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Power_tank_4
+      rect:
+        serializedVersion: 2
+        x: 616
+        y: 636
+        width: 420
+        height: 416
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

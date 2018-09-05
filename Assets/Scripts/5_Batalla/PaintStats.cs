@@ -10,7 +10,8 @@ public class PaintStats : MonoBehaviour {
 	void Update () {
         if (Turn != -1)
         {
-            var o = GameRol.GetCharacterStats(Turn);
+			var o = GameRol.GetCharacterTurn(GameRol.GetCharacterTurn ());
+			transform.Find ("TextName").GetComponent<Text> ().text = o.Name;
             transform.Find("TextAtk").GetComponent<Text>().text = o.Stats.ATK.ToString("000");
             transform.Find("TextDef").GetComponent<Text>().text = o.Stats.DEF.ToString("000");
             transform.Find("TextMag").GetComponent<Text>().text = o.Stats.MAG.ToString("000");

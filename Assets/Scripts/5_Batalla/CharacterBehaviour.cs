@@ -22,7 +22,6 @@ public class CharacterBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(!isInitialPosition){
-            Debug.Log("HEY PRRO");
             transform.GetComponent<Animator>().SetBool("Run", true);
             float distanceTarget = Vector2.Distance(transform.position, initialPosition);
             if (distanceTarget.CompareTo(C_ZERO) != 0)
