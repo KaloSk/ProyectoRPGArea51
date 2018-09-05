@@ -3,6 +3,8 @@
 [System.Serializable]
 public class GameController {
 
+	static int GameTurn { get; set;}
+
     static List<Character> Characters { get; set; }
 
     static List<PlayerItem> CharacterItem { get; set; }

@@ -4,6 +4,9 @@ using UnityEngine;
 public class Character {
 
     public int ID { get; set; }
+
+	public string TempName { get; set; }
+
     public string Name { get; set; }
     public string Type { get; set; }
     public Stats Stats { get; set; }
