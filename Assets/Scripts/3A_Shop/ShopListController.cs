@@ -10,8 +10,7 @@ public class ShopListController : MonoBehaviour {
 
     ArrayList ItemsInShop;
 
-    void Start()
-    {
+    void Start() {
 
         // 1. Get the data to be displayed
         ItemsInShop = new ArrayList(){
