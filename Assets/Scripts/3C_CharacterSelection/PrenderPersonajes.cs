@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PrenderPersonajes : Personaje {
 
     public int id;
-
     // Use this for initialization
     void Start () {
 		
@@ -19,7 +19,6 @@ public class PrenderPersonajes : Personaje {
     public void slot() {
         Transform formationList = GameObject.Find("Formationlist").transform;
         if (!formationList.Find("Character1").gameObject.activeInHierarchy) {
-            Debug.Log("Encontrado1");
         }
         else if (!formationList.Find("Character2").gameObject.activeInHierarchy){
             Debug.Log("Encontrado2");
