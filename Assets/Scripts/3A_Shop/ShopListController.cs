@@ -17,22 +17,22 @@ public class ShopListController : MonoBehaviour {
         ItemsInShop = new ArrayList(){
             new ShopItem(ItemImages[0],
                        "PocionVerde",
-                       "Heals\t:\t10HP\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
+                       "Heals\t:\t10HP"),
             new ShopItem(ItemImages[1],
                        "PocionAzul",
-                       "Restores\t:\t10MP\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
+                       "Restores\t:\t10MP"),
             new ShopItem(ItemImages[2],
                        "Objeto",
                        "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
             new ShopItem(ItemImages[3],
                        "Objeto2",
                        "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
-            new ShopItem(ItemImages[4],
+            /*new ShopItem(ItemImages[4],
                        "Objeto3",
                        "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0"),
             new ShopItem(ItemImages[5],
                        "Objeto4",
-                       "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0")
+                       "Power\t:\t5\nAttack\t:\t5\nTame\t:\t10\nVenom\t:\t0")*/
         };
 
         // 2. Iterate through the data, 
