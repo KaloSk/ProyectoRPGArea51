@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Z_EasterEgg.unity
     guid: 701294df7642f4230b45d69a734b4018
+  - enabled: 1
+    path: Assets/Scenes/3C_CharacterSelection.unity
+    guid: cea63df5a39216d458023c0a0642b28a
   m_configObjects: {}
