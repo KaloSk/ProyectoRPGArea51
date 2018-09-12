@@ -5,6 +5,8 @@ public class Character {
 
     public int ID { get; set; }
 
+    public bool IsPlayer {get;set;}
+
 	public string TempName { get; set; }
 
     public string Name { get; set; }

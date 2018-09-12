@@ -24,6 +24,8 @@ public class CharacterBehaviour : MonoBehaviour {
         if(!isInitialPosition){
             transform.GetComponent<Animator>().SetBool("Run", true);
             float distanceTarget = Vector2.Distance(transform.position, initialPosition);
+
+
             if (distanceTarget.CompareTo(C_ZERO) != 0)
             {
                 transform.position = Vector2.MoveTowards(transform.position, initialPosition, 10 * Time.deltaTime);
@@ -32,9 +34,12 @@ public class CharacterBehaviour : MonoBehaviour {
             {
                 isInitialPosition = true;
                 transform.GetComponent<Animator>().SetBool("Run", false);
+                GameRol.ChangeTurnMethod();
             }
         }
 	}
+
+    public RTP GameRol;
 
     public void returnOriginalPosition(){
         isInitialPosition = false;
@@ -44,5 +49,9 @@ public class CharacterBehaviour : MonoBehaviour {
     {
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.PlayOneShot(characterSounds[i]);
+    }
+
+    public void ChangePosition(int i){
+
     }
 }
