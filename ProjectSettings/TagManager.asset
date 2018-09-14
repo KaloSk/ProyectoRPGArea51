@@ -7,6 +7,10 @@ TagManager:
   - Character1
   - Character2
   - Character3
+  - Nivel2
+  - Nivel3
+  - Boss1
+  - Nivel
   layers:
   - Default
   - TransparentFX

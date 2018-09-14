@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
 public class PrenderPersonajes : Personaje {
 
+    public int id;
+    
     public Sprite pers;
     public Text namePers;
     public Text statsPers;
 
-    public int id;
     // Use this for initialization
     void Start () {
 		
@@ -21,12 +22,6 @@ public class PrenderPersonajes : Personaje {
 	}
 
     public void slot() {
-        /*if (GameObject.Find("Character1").gameObject.activeSelf) {
-            Debug.Log("Prendido1");
-        }
-        else {
-            Debug.Log("Apagado");
-        }*/
         Transform formationList = GameObject.Find("Formationlist").transform;
         if (!formationList.Find("Character1").gameObject.activeInHierarchy) {
             Debug.Log("Encontrado1");
@@ -39,7 +34,7 @@ public class PrenderPersonajes : Personaje {
         }
     }
 
-    public void cambioPers() {
+     public void cambioPers() {
         GameObject.Find("Character1").transform.GetComponent<Image>().sprite = pers;
         GameObject.Find("Character1/Name1/nombre1").transform.GetComponent<Text>().text = namePers.text ;
         GameObject.Find("Character1/Stats1/Number1").transform.GetComponent<Text>().text = statsPers.text;

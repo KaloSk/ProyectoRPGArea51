@@ -273,10 +273,10 @@ GameObject:
   - component: {fileID: 397637169}
   - component: {fileID: 397637170}
   - component: {fileID: 397637172}
-  - component: {fileID: 397637171}
+  - component: {fileID: 397637173}
   m_Layer: 0
-  m_Name: Nivel 3
-  m_TagString: Untagged
+  m_Name: Nivel3
+  m_TagString: Nivel3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,18 +339,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!114 &397637171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 397637168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 694df9939beca46e1971f56625773fc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indice: 6
 --- !u!58 &397637172
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -366,6 +354,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.5
+--- !u!114 &397637173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 397637168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d0d2b3085ac82458e75ddb2c805972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  victory: 0
+  levelPrend: {fileID: 21300000, guid: 5624528cde99a824a946362839e556e8, type: 3}
 --- !u!1 &520498195
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,10 +377,10 @@ GameObject:
   - component: {fileID: 520498196}
   - component: {fileID: 520498197}
   - component: {fileID: 520498199}
-  - component: {fileID: 520498198}
+  - component: {fileID: 520498200}
   m_Layer: 0
-  m_Name: Boss 1
-  m_TagString: Untagged
+  m_Name: Boss1
+  m_TagString: Boss1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -442,18 +443,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!114 &520498198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 520498195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 694df9939beca46e1971f56625773fc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indice: 6
 --- !u!58 &520498199
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -469,6 +458,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.22
+--- !u!114 &520498200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 520498195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d0d2b3085ac82458e75ddb2c805972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  victory: 3
+  levelPrend: {fileID: 21300094, guid: 5b6ca8c9d794440369d23b0a3011b57a, type: 3}
 --- !u!1 &544438105
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +512,7 @@ GameObject:
   - component: {fileID: 583547970}
   - component: {fileID: 583547969}
   m_Layer: 0
-  m_Name: Mundo 1
+  m_Name: Mundo1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -862,10 +864,10 @@ GameObject:
   - component: {fileID: 1037820919}
   - component: {fileID: 1037820920}
   - component: {fileID: 1037820922}
-  - component: {fileID: 1037820921}
+  - component: {fileID: 1037820923}
   m_Layer: 0
-  m_Name: Nivel 2
-  m_TagString: Untagged
+  m_Name: Nivel2
+  m_TagString: Nivel2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -928,18 +930,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!114 &1037820921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1037820918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 694df9939beca46e1971f56625773fc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indice: 6
 --- !u!58 &1037820922
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -955,6 +945,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.5
+--- !u!114 &1037820923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1037820918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d0d2b3085ac82458e75ddb2c805972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  victory: 0
+  levelPrend: {fileID: 21300000, guid: 3cc767b5ac54d6e43815aa8342ebf307, type: 3}
 --- !u!1 &1157065044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,7 +1074,7 @@ GameObject:
   - component: {fileID: 1276988671}
   m_Layer: 0
   m_Name: Nivel
-  m_TagString: Untagged
+  m_TagString: Nivel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
