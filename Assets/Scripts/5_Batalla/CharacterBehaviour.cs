@@ -25,10 +25,12 @@ public class CharacterBehaviour : MonoBehaviour {
             transform.GetComponent<Animator>().SetBool("Run", true);
             float distanceTarget = Vector2.Distance(transform.position, initialPosition);
 
+            //Debug.Log("SOY: " + transform.gameObject.name  + "" + initialPosition + " mi distancia es : " +distanceTarget );
 
             if (distanceTarget.CompareTo(C_ZERO) != 0)
             {
-                transform.position = Vector2.MoveTowards(transform.position, initialPosition, 10 * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, initialPosition, 10 * Time.deltaTime);
+                Debug.Log("MOVETE PTU");
             }
             else
             {
@@ -38,6 +40,8 @@ public class CharacterBehaviour : MonoBehaviour {
             }
         }
 	}
+
+
 
     public RTP GameRol;
 

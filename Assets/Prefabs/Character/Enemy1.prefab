@@ -342,6 +342,7 @@ MonoBehaviour:
   characterSounds:
   - {fileID: 8300000, guid: 38d18e9e1ac7dbe4e923adeacb2f7dba, type: 3}
   - {fileID: 0}
+  GameRol: {fileID: 0}
 --- !u!114 &114422990447760802
 MonoBehaviour:
   m_ObjectHideFlags: 1

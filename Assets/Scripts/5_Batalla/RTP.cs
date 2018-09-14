@@ -269,10 +269,17 @@ public class RTP : MonoBehaviour {
             //Debug.Log("HOLA");
             //EnAmy ttack
              //if(!enemyAttacking) {
-                stopAction = false;
-                targetReach = false;
-               // Attack(GameObject.Find(GetCharacterTurn(characterTurn).TempName).GetComponent<Transform>(),
-               // GameObject.Find(string.Concat("Player","1")).GetComponent<Transform>());
+                
+                 if(isDoingAction){
+                    stopAction = false;
+                    targetReach = false;
+                    isDoingAction = false; 
+                    StartCoroutine(Attack(GameObject.Find(GetCharacterTurn(characterTurn).TempName).GetComponent<Transform>(),GameObject.Find(string.Concat("Player","1")).GetComponent<Transform>()));
+                 }
+
+
+               // 
+               // 
                 //enemyAttacking = true;
              //}
 
@@ -282,29 +289,26 @@ public class RTP : MonoBehaviour {
             var o = GameObject.Find("Enemies");
             if (battleStatus == 1) { //ATTACK!
 
-                Debug.Log("XD" + targetSelected);
+                Debug.Log("ESPERANDO TARGET : TS (" + targetSelected+ ")");
 
-                if(targetSelected == 1) {
-                    
-
+                if(targetSelected !=0) {
                     if(isDoingAction){
+                        ShowEnemyTargets(false);
                         stopAction = false;
                         targetReach = false;
                         isDoingAction = false;
-                        StartCoroutine(Attack(GameObject.Find(GetCharacterTurn(characterTurn).TempName).GetComponent<Transform>(), GameObject.Find("Enemy1").GetComponent<Transform>()));
+                        StartCoroutine(Attack(GameObject.Find(GetCharacterTurn(characterTurn).TempName).GetComponent<Transform>(), GameObject.Find("Enemy"+targetSelected).GetComponent<Transform>()));
                     
                     }
-                   
-
                 }
                 else 
                 {
-                    o.transform.GetChild(0).GetComponent<Transform>().Find("TargetDamage").gameObject.SetActive(true);
+                    ShowEnemyTargets(true);
                 }
             }
             else 
             {
-                o.transform.GetChild(0).GetComponent<Transform>().Find("TargetDamage").gameObject.SetActive(false);            
+                ShowEnemyTargets(false);         
             }
         }
         
@@ -365,7 +369,7 @@ public class RTP : MonoBehaviour {
 
     void ButtonDoAction(int power)
     {
-        Debug.Log(power);
+//        Debug.Log(power);
         battleStatus = power;
         PlaySound(BUTTON_CLICK);
 
@@ -417,28 +421,46 @@ public class RTP : MonoBehaviour {
     IEnumerator Attack(Transform target1, Transform target2)
     {
         while (!stopAction) {
+
+Debug.Log(stopAction);
+
             float distanceTarget = Vector2.Distance(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position);
-            if (distanceTarget.CompareTo(C_ZERO) != 0) {                
+            if (distanceTarget.CompareTo(C_ZERO) != 0 && !targetReach) {                
                 target1.position = Vector2.MoveTowards(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position, 7.5f * Time.deltaTime);
                 target1.GetComponent<Animator>().SetBool("Run", true);
-                
+                Debug.Log("ACERCANDONSE");
             }
             else {
+                Debug.Log(target1.name + " llego hacia el " + target2.name);
                 targetReach = true;
+                stopAction = true;     
             }
 
             if (targetReach) {
+                Debug.Log("DEAL DAMAGE");
                 targetSelected = 0;
                 battleStatus = 0;
                 target1.GetComponent<Animator>().SetTrigger("DealDamage");
-                target2.Find("Damage").GetComponent<Transform>().gameObject.SetActive(true);                
-                stopAction = true;
+
+                var dd = CharacterDamage(GetCharacterStats(characterTurn), GetCharacterStats(3),1); 
+                target2.Find("Damage").GetComponent<TextMesh>().text = dd.ToString();
+                target2.Find("Damage").GetComponent<Transform>().gameObject.SetActive(true);       
+
                 
-                isDoingAction = true;
-                
+
+                stopAction = true;                
+                isDoingAction = true;       
+                StopAllCoroutines();
             }
             yield return null;
         }
+    }
+
+    public void ShowEnemyTargets(bool val){
+        var enemyList = GameObject.Find("Enemies");
+        for(var i = 0; i < enemyList.transform.childCount; i++){
+            enemyList.transform.GetChild(i).GetComponent<Transform>().Find("TargetDamage").gameObject.SetActive(val);
+        } 
     }
 
     #endregion
@@ -478,6 +500,20 @@ public class RTP : MonoBehaviour {
 	{
 		return characterTurn;
 	}
+
+    public int CharacterDamage(Character attack, Character defense, int damagetType){
+        var damageDone = 0; 
+        if(damagetType==1){
+            if(attack.StatsInGame.ATK>defense.StatsInGame.DEF){
+                damageDone = attack.StatsInGame.ATK - defense.StatsInGame.DEF;
+            }
+        } else if(damagetType==2){
+            if(attack.StatsInGame.MAG>defense.StatsInGame.MDF){
+                damageDone = attack.StatsInGame.MAG - defense.StatsInGame.MDF;
+            }
+        }
+        return damageDone;
+    }
 
     #endregion
 
