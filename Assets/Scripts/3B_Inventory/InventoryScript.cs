@@ -28,10 +28,10 @@ private List <Bag> bags = new List<Bag>();
 	[SerializeField]
 	private ItemV2[] items;
 
-	public bool CanAddBag
-	{
-		get { return bags.Count < 6; }
-	}
+    public bool CanAddBag
+    {
+        get { return bags.Count < 6; }
+    }
 
 	private void Awake()
 	{
