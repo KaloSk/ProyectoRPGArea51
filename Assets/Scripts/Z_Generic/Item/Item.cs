@@ -10,4 +10,12 @@ public class Item  {
     public string Formula { get; set; }
     public Stats Stats { get; set; }    
 
+    public Item(int id, Sprite icon, string name, string description)
+    {
+        ID = id;
+        Icon = icon;
+        Name = name;
+        Description = description;
+    }
+
 }
