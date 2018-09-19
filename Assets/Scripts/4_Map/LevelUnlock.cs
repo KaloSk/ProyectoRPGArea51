@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelUnlock : MonoBehaviour {
 
 	public int victory = 0;
+
+    public int indice;
 
 	public Sprite levelPrend;
 	
@@ -24,4 +27,15 @@ public class LevelUnlock : MonoBehaviour {
 			GameObject.Find("Mundo1/Boss/Boss1").transform.GetComponent<SpriteRenderer>().sprite = levelPrend;
 		}
 	}
+    void nivel () {
+        if (GameObject.Find("Mundo1/Niveles/Nivel2").transform.GetComponent<SpriteRenderer>().sprite == levelPrend){
+            SceneManager.LoadScene(indice);
+        }
+        if (GameObject.Find("Mundo1/Niveles/Nivel3").transform.GetComponent<SpriteRenderer>().sprite == levelPrend){
+            SceneManager.LoadScene(indice);
+        }
+        if (GameObject.Find("Mundo1/Niveles/Boss1").transform.GetComponent<SpriteRenderer>().sprite == levelPrend){
+            SceneManager.LoadScene(indice);
+        }
+    }
 }
