@@ -7,17 +7,89 @@ public class GameController {
 
     static List<Character> Characters { get; set; }
 
+    static List<int> CurrentCharacters { get; set; }
+
     static List<PlayerItem> CharacterItem { get; set; }
 
     static List<Item> Items { get; set; }
     
     public GameController()
     {
+        
     }
 
     public GameController(List<UnityEngine.Sprite> ItemsSprite)
     {
         ItemTest(ItemsSprite);
+    }
+
+    public void NewGame(){
+
+        Characters = new List<Character>();
+
+        Characters.Add(new Character()
+        {
+            ID = 1,
+            Level = 1,
+            Name = "Sir Stone",
+            IsPlayer = true,
+            Formation = 1,
+            Stats = new Stats(){
+                HP = 8,
+                MP = 0,
+                ATK = 5,
+                DEF = 9,
+                MAG = 0,
+                MDF = 7,
+                SPE = 5,
+                LUK = 0
+            },
+            
+        });
+
+        Characters.Add(new Character()
+        {
+            ID = 2,
+            Level = 1,
+            Name = "D. Healer",
+            IsPlayer = true,
+            Formation = 1,
+            Stats = new Stats()
+            {
+                HP = 4,
+                MP = 6,
+                ATK = 2,
+                DEF = 3,
+                MAG = 6,
+                MDF = 6,
+                SPE = 4,
+                LUK = 0
+            },
+
+        });
+
+        Characters.Add(new Character()
+        {
+            ID = 3,
+            Level = 1,
+            Name = "P. Dagger",
+            IsPlayer = true,
+            Formation = 1,
+            Stats = new Stats()
+            {
+                HP = 6,
+                MP = 0,
+                ATK = 8,
+                DEF = 3,
+                MAG = 0,
+                MDF = 4,
+                SPE = 8,
+                LUK = 0
+            },
+
+        });
+
+        if (CurrentCharacters == null) CurrentCharacters = new List<int>();
     }
 
     void ItemTest(List<UnityEngine.Sprite> ItemsSprite)
@@ -72,6 +144,14 @@ public class GameController {
 
         
 
+    }
+
+    public List<Character> GetCharactersList(){
+        return Characters;
+    }
+
+    public List<int> GetCurrentCharactersList(){
+        return CurrentCharacters;
     }
 
 }

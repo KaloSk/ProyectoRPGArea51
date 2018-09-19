@@ -9,6 +9,7 @@ public class Character {
 
 	public string TempName { get; set; }
 
+    public int Level { get; set; }
     public string Name { get; set; }
     public string Type { get; set; }
     public Stats Stats { get; set; }
@@ -23,5 +24,8 @@ public class Character {
     public List<Skill> Skills { get; set; }
 
     public Stats StatsInGame { get; set; }
+
+    public Sprite Face { get; set; }
+    public Sprite Full { get; set; }
 
 }
