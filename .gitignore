@@ -35,3 +35,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Assets/Scripts/3B_Inventory/TurnOnOff/Invs.cs.meta
+Assets/Material/Character/Tank/Anim/temp.meta
+Assets/Scripts/3B_Inventory/BagButton.cs.meta

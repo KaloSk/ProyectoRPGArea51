@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class TurnOnInv : Personaje {
+public class TurnOnInv : MonoBehaviour {
 
-
-    public int id;
+    public Sprite pers;
+    public string namePers;
 
 	// Use this for initialization
 	void Start () {
@@ -17,8 +18,7 @@ public class TurnOnInv : Personaje {
 		
     }
     public void OnPlay(){
-        //GameObject.Find("Character" + id);
-        apagar(GameObject.Find("Character" + id).gameObject);
-        prender(GameObject.Find("Character" + id).gameObject);
+        GameObject.Find("BackGround/Frame/Personaje/Image").transform.GetComponent<Image>().sprite = pers;
+        GameObject.Find("BackGround/Frame/Personaje/Text").transform.GetComponent<Text>().text = namePers;
     } 
 }

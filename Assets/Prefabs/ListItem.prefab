@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 114418247060048116}
   - component: {fileID: 114094913635911502}
   - component: {fileID: 114900000428874280}
-  - component: {fileID: 114641945922144868}
+  - component: {fileID: 114719071418835526}
   m_Layer: 5
   m_Name: ListItem
   m_TagString: Untagged
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114641945922144868
+--- !u!114 &114719071418835526
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1527990041670308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -234403039, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -219,6 +219,11 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 114418247060048116}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114810415946654486
 MonoBehaviour:
   m_ObjectHideFlags: 1
