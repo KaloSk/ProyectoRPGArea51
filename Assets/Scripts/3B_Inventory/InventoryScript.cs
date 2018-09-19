@@ -19,8 +19,19 @@ public static InventoryScript MyInstance
 	}
 }
 
+private List <Bag> bags = new List<Bag>();
+
+	[SerializeField]
+	private BagButton[] bagButtons;
+
+	
 	[SerializeField]
 	private ItemV2[] items;
+
+	public bool CanAddBag
+	{
+		get { return bags.Count <6; }
+	}
 
 	private void Awake()
 	{
@@ -29,13 +40,46 @@ public static InventoryScript MyInstance
 		bag.Use();
 	}
 
-	// Use this for initialization
-	void Start () {
-		
+	private void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.J))
+		{
+		Bag bag = (Bag)Instantiate(items[0]);
+		bag.Initialize(20);
+		bag.Use();
+		}
+
+		if(Input.GetKeyDown(KeyCode.B))
+		{
+			InventoryScript.MyInstance.OpenClose();
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public void AddBag (Bag bag)
+	{ 
+		foreach (BagButton bagButton in bagButtons)
+		{
+			if (bagButton.MyBag == null)
+			{
+				bagButton.MyBag = bag;
+				bags.Add(bag);
+				break;
+			}
+		}
 	}
+
+	public void OpenClose()
+	{
+		bool closedBag = bags.Find(x => !x.MyBagScript.IsOpen);
+
+		foreach (Bag bag in bags)
+		{
+			if (bag.MyBagScript.IsOpen != closedBag)
+			{
+				bag.MyBagScript.OpenClose();
+			}
+		}
+	}
+
+
 }

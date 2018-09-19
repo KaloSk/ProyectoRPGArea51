@@ -33,7 +33,12 @@ using UnityEngine;
 
 	public void Use()
 	{
-		MyBagScript = GameObject.Instantiate(bagPrefab, InventoryScript.MyInstance.transform).GetComponent<BagScript>();
-		MyBagScript.AddSlots(slots);
+		if(InventoryScript.MyInstance.CanAddBag)
+		{ 
+			MyBagScript = GameObject.Instantiate(bagPrefab, InventoryScript.MyInstance.transform).GetComponent<BagScript>();
+			MyBagScript.AddSlots(slots);
+
+			InventoryScript.MyInstance.AddBag(this);
+		}
 	}
 }
