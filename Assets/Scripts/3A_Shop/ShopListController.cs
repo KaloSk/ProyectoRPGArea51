@@ -87,6 +87,7 @@ public class ShopListController : MonoBehaviour {
         foreach (Item shopItem in ItemsInShop)
         {
             GameObject newShopItem = Instantiate(ListItemPrefab) as GameObject;
+            newShopItem.name = "Item" + shopItem.ID;
             ShopListItemControler controller = newShopItem.GetComponent<ShopListItemControler>();
             controller.Icon.sprite = shopItem.Icon;
             controller.Name.text = shopItem.Name;
@@ -103,15 +104,19 @@ public class ShopListController : MonoBehaviour {
     }
 
     void BuyItem (int itemID){
-        Debug.Log("comprando" + itemID) ;
-
-        GameController gameController = new GameController();
-
-        gameController.GetCharacterItemList().Add(new PlayerItem()
+        GameController gameController = new GameController();/*CHECK LATER*/
+        var item = gameController.GetCharacterItemList().Find(ii => ii.Item.ID == itemID);
+        if (item != null)
         {
-            Quantity = 1,
-            Item = ItemsInShop.Find(it => it.ID == itemID)
-        });
-
+            item.Quantity++;
+        }
+        else
+        {
+            gameController.GetCharacterItemList().Add(new PlayerItem()
+            {
+                Quantity = 1,
+                Item = ItemsInShop.Find(it => it.ID == itemID)
+            });
+        }
     }
 }

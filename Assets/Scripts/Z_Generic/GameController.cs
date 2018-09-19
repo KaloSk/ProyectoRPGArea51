@@ -3,6 +3,8 @@
 [System.Serializable]
 public class GameController {
 
+    static int Money { get; set; }
+
 	static int GameTurn { get; set;}
 
     static List<Character> Characters { get; set; }
@@ -119,20 +121,6 @@ public class GameController {
 
         #endregion
 
-        Items = new List<Item>
-        {
-            new Item()
-            {
-                ID = 1,
-                Name = "Poción 1",
-                Description = "Restaura el 20% de vida",
-                Type = ItemTypeList[0],
-                Formula = "HEAL|ALLY|20%",
-                Icon = ItemsSprite[1]
-            }
-        };
-
-
         CharacterItem = new List<PlayerItem>()
         {
            new PlayerItem()
@@ -146,12 +134,23 @@ public class GameController {
 
     }
 
+    public int GetMoney()
+    {
+        return Money;
+    }
+
     public List<Character> GetCharactersList(){
         return Characters;
     }
 
     public List<int> GetCurrentCharactersList(){
         return CurrentCharacters;
+    }
+
+    public List<PlayerItem> GetCharacterItemList()
+    {
+        if (CharacterItem == null) CharacterItem = new List<PlayerItem>();/*CHECK LATER*/
+        return CharacterItem;
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿public class SkillType {
 
-    public int ID { get; set; }
+    public int Type { get; set; }
     public string Name { get; set; }
 
 }
