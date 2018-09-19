@@ -30,7 +30,7 @@ private List <Bag> bags = new List<Bag>();
 
 	public bool CanAddBag
 	{
-		get { return bags.Count <6; }
+		get { return bags.Count < 6; }
 	}
 
 	private void Awake()

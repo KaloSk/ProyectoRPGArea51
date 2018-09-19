@@ -9,15 +9,15 @@ public class MovingCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        border = Screen.width / 10;
 	}
 	
 	// Update is called once per frame
 	void LateUpdate () {
-        if (CheckBorder ( 0, Input.mousePosition.y)) {
+        if (CheckBorder ( 0, Input.mousePosition.y) && Camera.main.transform.position.y >= -26.8) {
             Camera.main.transform.Translate(Vector3.down * camSpeed * Time.deltaTime);
         }
-        if (CheckBorder(Screen.height, Input.mousePosition.y)) {
+        if (CheckBorder(Screen.height, Input.mousePosition.y) && Camera.main.transform.position.y <= -7.08) {
             Camera.main.transform.Translate(Vector3.up * camSpeed * Time.deltaTime);
         }
         if (CheckBorder(0, Input.mousePosition.x)) {
@@ -36,6 +36,5 @@ public class MovingCamera : MonoBehaviour {
         } else {
             return targetValue < limit && targetValue > limit + difference;
         }
-
     }
 }
