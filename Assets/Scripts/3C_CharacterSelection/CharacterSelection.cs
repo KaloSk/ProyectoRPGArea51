@@ -7,10 +7,6 @@ using UnityEngine.Events;
 
 public class CharacterSelection : MonoBehaviour {
 
-    //TEMPORARY//
-    public List<Sprite> CharacterFaces;
-    public List<Sprite> CharacterBody;
-
     GameController game;
 
     public GameObject ContentCharacterFace;
@@ -27,24 +23,13 @@ public class CharacterSelection : MonoBehaviour {
         }
 
         game = new GameController();
-        game.NewGame();
-
-        //TEMPORAL//
-        game.GetCharactersList()[0].Face = CharacterFaces[0];
-        game.GetCharactersList()[0].Full = CharacterBody[0];
-
-        game.GetCharactersList()[1].Face = CharacterFaces[1];
-        game.GetCharactersList()[1].Full = CharacterBody[1];
-
-        game.GetCharactersList()[2].Face = CharacterFaces[2];
-        game.GetCharactersList()[2].Full = CharacterBody[2];
-
 
         foreach(var i in game.GetCharactersList()){
 
             Debug.Log(i.Name);
 
             GameObject face = Instantiate(CharacterFacePrefab);
+            face.name = "CharacterFace" + i.ID;
             face.transform.Find("Panel/Text").GetComponent<Text>().text = i.Name;
             face.transform.GetComponent<Image>().sprite = i.Face;
             face.transform.parent = ContentCharacterFace.transform;
@@ -87,7 +72,8 @@ public class CharacterSelection : MonoBehaviour {
                 currentCharacter.Stats.SPE.ToString("000"), "\n",
                 currentCharacter.Stats.LUK.ToString("000")
             );
-        full.transform.GetComponent<Image>().sprite = currentCharacter.Full;
+        full.transform.Find("Sprite").GetComponent<Image>().sprite = currentCharacter.Full;
+        //full.transform.GetComponent<Image>().sprite = currentCharacter.Full;
         full.transform.parent = ContentCharacterFull.transform;
 
         var newi = currentCharacter.ID;

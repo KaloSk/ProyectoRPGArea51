@@ -2,6 +2,8 @@
 
 [System.Serializable]
 public class GameController {
+    
+    static string GroupName { get; set; }
 
     static int Money { get; set; }
 
@@ -27,29 +29,31 @@ public class GameController {
 
     public void NewGame(){
 
-        Characters = new List<Character>();
-
-        Characters.Add(new Character()
+        Characters = new List<Character>
         {
-            ID = 1,
-            Level = 1,
-            Name = "Sir Stone",
-            IsPlayer = true,
-            Formation = 1,
-            Stats = new Stats(){
-                HP = 8,
-                MP = 0,
-                ATK = 5,
-                DEF = 9,
-                MAG = 0,
-                MDF = 7,
-                SPE = 5,
-                LUK = 0
-            },
-            
-        });
+            new Character()
+            {
+                ID = 1,
+                Level = 1,
+                Name = "Sir Stone",
+                IsPlayer = true,
+                Formation = 1,
+                Stats = new Stats()
+                {
+                    HP = 8,
+                    MP = 0,
+                    ATK = 5,
+                    DEF = 9,
+                    MAG = 0,
+                    MDF = 7,
+                    SPE = 5,
+                    LUK = 0
+                },
 
-        Characters.Add(new Character()
+            }
+        };
+
+        /*Characters.Add(new Character()
         {
             ID = 2,
             Level = 1,
@@ -89,9 +93,12 @@ public class GameController {
                 LUK = 0
             },
 
-        });
+        });*/
 
-        if (CurrentCharacters == null) CurrentCharacters = new List<int>();
+        CurrentCharacters = new List<int>
+        {
+            1
+        };
     }
 
     void ItemTest(List<UnityEngine.Sprite> ItemsSprite)
@@ -151,6 +158,11 @@ public class GameController {
     {
         if (CharacterItem == null) CharacterItem = new List<PlayerItem>();/*CHECK LATER*/
         return CharacterItem;
+    }
+
+    public void SetGroupName(string name)
+    {
+        GroupName = name;
     }
 
 }

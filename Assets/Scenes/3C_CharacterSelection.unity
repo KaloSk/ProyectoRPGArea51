@@ -144,7 +144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000046406174}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &80565300
@@ -376,14 +376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e50d6ad7f603429398462622d8639ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterFaces:
-  - {fileID: 21300000, guid: a48a7f757dfd04882bb512f1f2118595, type: 3}
-  - {fileID: 21300008, guid: c01c82d2f2cc44741874391d42c5cfd1, type: 3}
-  - {fileID: 21300000, guid: c01c82d2f2cc44741874391d42c5cfd1, type: 3}
-  CharacterBody:
-  - {fileID: 21300006, guid: a48a7f757dfd04882bb512f1f2118595, type: 3}
-  - {fileID: 21300002, guid: a48a7f757dfd04882bb512f1f2118595, type: 3}
-  - {fileID: 21300004, guid: a48a7f757dfd04882bb512f1f2118595, type: 3}
   ContentCharacterFace: {fileID: 294505656}
   CharacterFacePrefab: {fileID: 1820101648940040, guid: 4588e9d1e4de94962812a358db274756,
     type: 2}
@@ -1093,8 +1085,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 754302266}
   m_HandleRect: {fileID: 754302265}
   m_Direction: 2
-  m_Value: 0.000093257484
-  m_Size: 0.9986582
+  m_Value: 0.0001398797
+  m_Size: 0.9986581
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1647,8 +1639,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1361796802}
   m_HandleRect: {fileID: 1361796801}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99433345
+  m_Value: 0.9999808
+  m_Size: 0.9943334
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
