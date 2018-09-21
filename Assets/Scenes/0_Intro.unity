@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dade528bfa2e740368bf9523b9d86fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indice: 1
+  indice: 6
 --- !u!1 &250312163
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +651,10 @@ MonoBehaviour:
   - {fileID: 21300012, guid: 245619a2817930d4f890d40a25f16646, type: 3}
   - {fileID: 21300006, guid: 245619a2817930d4f890d40a25f16646, type: 3}
   - {fileID: 21300010, guid: 245619a2817930d4f890d40a25f16646, type: 3}
+  CharacterAnimator:
+  - {fileID: 1757418005265400, guid: 4897767273161422994cdcb29c3e2592, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1350782153
 GameObject:
   m_ObjectHideFlags: 0

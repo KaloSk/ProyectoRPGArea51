@@ -13,6 +13,8 @@ public class CharacterBehaviour : MonoBehaviour {
     public List<AudioClip> characterSounds;
     private AudioSource audioSource;
 
+    public int CharacterArrayID = -1;
+
 	// Use this for initialization
 	void Start () {
         initialPosition = transform.position;

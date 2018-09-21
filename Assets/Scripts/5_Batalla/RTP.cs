@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class RTP : MonoBehaviour {
 
-    private AudioSource audioSource;
+    AudioSource audioSource;
+    GameController gg;
 
     public List<Character> turn;
 
@@ -23,7 +24,7 @@ public class RTP : MonoBehaviour {
 
     [Header("Characters")]
     public List<GameObject> characterLoadedList;
-    List<Character> characterList = new List<Character>();
+    List<Character> BattlersList = new List<Character>();
     int characterLoaded = 0;
 
     [Header("BattleMenu")]
@@ -40,208 +41,55 @@ public class RTP : MonoBehaviour {
     public List<Sprite> skillSpriteList;
     /*******/
 
+    /*new Skill()
+                {
+                    ID = 1,
+                    Name = "Golpe con mazo",
+                    Damage = 100,
+                    Formula = "ENEMY|DAMAGE|100",
+                    Level = 1,
+                    Icon = skillSpriteList[0],
+                    Type = GameConstants.SKILL_TYPE_FOR_ENEMY
+                },*/
+
     // Use this for initialization
     void Start () {
 
-        GameController gg = new GameController(skillSpriteList);
-
         audioSource = new AudioSource();
+        gg = new GameController();
+        var allCharacter = gg.GetCharactersList();
+        var totalCount = 0;
+        var count = 0;
+        foreach(var i in gg.GetCurrentCharactersList()){
+            count++;
+            var o = allCharacter.Find(ch => ch.ID == i);
+            o.TempName = "Player" + count;
+            o.StatsInGame = o.Stats;
+            BattlersList.Add(o);
+            GameObject.Find("Player" + count).GetComponent<CharacterBehaviour>().CharacterArrayID = totalCount;
+            totalCount++;
+        }
 
-        Character character = new Character()
+        Debug.Log(gg.GetCurrentCharactersList().Count);
+
+        for (var i = count+1; i <= 3; i++)
         {
-            ID = 1,
-            IsPlayer = true,
-            TempName = "Player1",
-            Name = "Cecil",
-            Equipment = null,
-            Formation = 0,
-            Sprite = characterLoadedList[0].GetComponent<Sprite>(),
-            Animator = characterLoadedList[0].GetComponent<Animator>().runtimeAnimatorController,
-            Position = CharacterFormation(0),
-            Type = "T",
-            Stats = new Stats() {
-                HP = 100,
-                MP = 10,
-                ATK = 30,
-                DEF = 20,
-                MAG = 5,
-                MDF = 12,
-                SPE = 15,
-                LUK = 5
-            },
-            Skills = new List<Skill>()
-            {
-                new Skill()
-                {
-                    ID = 1,
-                    Name = "Golpe con mazo",
-                    Damage = 100,
-                    Formula = "ENEMY|DAMAGE|100",
-                    Level = 1,
-                    Icon = skillSpriteList[0],
-                    Type = GameConstants.SKILL_TYPE_FOR_ENEMY
-                },
-				new Skill()
-				{
-					ID = 2,
-					Name = "Golpe con escudo",
-					Damage = 100,
-					Formula = "ENEMY|DAMAGE|100",
-					Level = 1,
-					Icon = skillSpriteList[1],
-					Type = GameConstants.SKILL_TYPE_FOR_ENEMY
-                },
-				new Skill()
-				{
-					ID = 3,
-					Name = "Grito de guerra",
-					Damage = 100,
-					Formula = "ENEMY|DAMAGE|100",
-					Level = 1,
-					Icon = skillSpriteList[2],
-					Type = GameConstants.SKILL_TYPE_FOR_SELF
-                },
-				new Skill()
-				{
-					ID = 4,
-					Name = "Provocar",
-					Damage = 100,
-					Formula = "ENEMY|DAMAGE|100",
-					Level = 1,
-					Icon = skillSpriteList[3],
-					Type = GameConstants.SKILL_TYPE_FOR_SELF
-                },
-				new Skill()
-				{
-					ID = 5,
-					Name = "Endurecer",
-					Damage = 100,
-					Formula = "ENEMY|DAMAGE|100",
-					Level = 1,
-					Icon = skillSpriteList[4],
-					Type = GameConstants.SKILL_TYPE_FOR_SELF
-                }
-            }
-        };
+            GameObject.Find("Player" + i).SetActive(false);
+        }
 
-        character.StatsInGame = character.Stats;
+        var allEnemies = gg.GetEnemiesList();
+        count = 0;
+        foreach(var i in gg.GetEnemiesList()){
+            count++;
+            var o = allEnemies.Find(ch => ch.ID == i.ID);
+            o.TempName = "Enemy" + count;
+            o.StatsInGame = o.Stats;
+            BattlersList.Add(o);
+            GameObject.Find("Enemy" + count).GetComponent<CharacterBehaviour>().CharacterArrayID = totalCount;
+            totalCount++;
+        }
 
-        characterList.Add(character);
-
-        Character character2 = new Character()
-        {
-            ID = 2,
-            IsPlayer = true,
-			TempName = "Player2",
-            Name = "Kain",
-            Equipment = null,
-            Formation = 1,
-            Sprite = characterLoadedList[1].GetComponent<Sprite>(),
-            Animator = characterLoadedList[1].GetComponent<Animator>().runtimeAnimatorController,
-            Position = CharacterFormation(1),
-            Type = "T",
-            Stats = new Stats()
-            {
-                HP = 100,
-                MP = 10,
-                ATK = 30,
-                DEF = 10,
-                MAG = 0,
-                MDF = 5,
-                SPE = 10,
-                LUK = 0
-            },
-            Skills = new List<Skill>()
-            {
-                new Skill()
-                {
-                    ID = 1,
-                    Name = "Golpe con mazo",
-                    Damage = 100,
-                    Formula = "ENEMY|DAMAGE|100",
-                    Level = 1,
-                    Icon = skillSpriteList[0],
-                    Type = GameConstants.SKILL_TYPE_FOR_ENEMY
-                },
-            }
-        };
-
-        character2.StatsInGame = character2.Stats;
-
-        characterList.Add(character2);
-
-        Character character3 = new Character()
-        {
-            ID = 1,
-            IsPlayer = true,
-			TempName = "Player3",
-            Name = "Edge",
-            Equipment = null,
-            Formation = 2,
-            Sprite = characterLoadedList[2].GetComponent<Sprite>(),
-            Animator = characterLoadedList[2].GetComponent<Animator>().runtimeAnimatorController,
-            Position = CharacterFormation(2),
-            Type = "T",
-            Stats = new Stats()
-            {
-                HP = 100,
-                MP = 10,
-                ATK = 30,
-                DEF = 10,
-                MAG = 0,
-                MDF = 5,
-                SPE = 50,
-                LUK = 0
-            },
-            Skills = new List<Skill>()
-            {
-                new Skill()
-                {
-                    ID = 1,
-                    Name = "Golpe con mazo",
-                    Damage = 100,
-                    Formula = "ENEMY|DAMAGE|100",
-                    Level = 1,
-                    Icon = skillSpriteList[0],
-                    Type = GameConstants.SKILL_TYPE_FOR_ENEMY
-                },
-            }
-        };
-
-        character3.StatsInGame = character3.Stats;
-
-        characterList.Add(character3);
-
-        Character enemy1 = new Character()
-        {
-            ID = 4,
-            IsPlayer = false,
-			TempName = "Enemy1",
-            Name = "Slime",
-            Equipment = null,
-            Formation = 2,
-            Sprite = characterLoadedList[3].GetComponent<Sprite>(),
-            Animator = characterLoadedList[3].GetComponent<Animator>().runtimeAnimatorController,
-            Position = CharacterFormation(2),
-            Type = "T",
-            Stats = new Stats()
-            {
-                HP = 100,
-                MP = 10,
-                ATK = 30,
-                DEF = 10,
-                MAG = 0,
-                MDF = 5,
-                SPE = 60,
-                LUK = 0
-            }
-        };
-
-        enemy1.StatsInGame = enemy1.Stats;
-
-        characterList.Add(enemy1);
-
-        //Debug.Log("D1: " + characterList.Count);
+        Debug.Log("D1: " + BattlersList.Count);
         
         for (int i = 0; i < battleMenuButton.Count; i++) {
             var newi = i+1;
@@ -251,7 +99,7 @@ public class RTP : MonoBehaviour {
 
         if(turn == null) {
             turn = new List<Character>();
-            turn.AddRange(characterList);
+            turn.AddRange(BattlersList);
 			turn.Sort((first, second) => second.Stats.SPE.CompareTo(first.Stats.SPE));            
         }
 
@@ -357,13 +205,13 @@ public class RTP : MonoBehaviour {
         /*
         if(characterLoaded==1){
 
-            Debug.Log("D2: " + characterList.Count);
+            Debug.Log("D2: " + BattlersList.Count);
 
-            for (var i = 0; i < characterList.Count; i++){
+            for (var i = 0; i < BattlersList.Count; i++){
                 Debug.Log("Characters/Player" + (i + 1));
-                GameObject.Find("Characters/Player" + (i + 1)).GetComponent<SpriteRenderer>().sprite = characterList[i].Sprite;
-                GameObject.Find("Characters/Player" + (i + 1)).GetComponent<Animator>().runtimeAnimatorController = characterList[i].Animator;
-                //GameObject.Find("Characters/Player" + (i + 1)).GetComponent<Transform>().transform.Translate(characterList[i].Position);
+                GameObject.Find("Characters/Player" + (i + 1)).GetComponent<SpriteRenderer>().sprite = BattlersList[i].Sprite;
+                GameObject.Find("Characters/Player" + (i + 1)).GetComponent<Animator>().runtimeAnimatorController = BattlersList[i].Animator;
+                //GameObject.Find("Characters/Player" + (i + 1)).GetComponent<Transform>().transform.Translate(BattlersList[i].Position);
             }
            
         }
@@ -491,6 +339,9 @@ public class RTP : MonoBehaviour {
             }
 
             if (targetReach) {
+
+                var tar2 = target2.GetComponent<CharacterBehaviour>().CharacterArrayID;
+
                 isDoingAnimation = false;
                 targetReach = false;                
                 isDoingAction = true;
@@ -498,9 +349,16 @@ public class RTP : MonoBehaviour {
                 targetSelected = 0;
                 battleStatus = 0;
                 target1.GetComponent<Animator>().SetTrigger("DealDamage");
-                var dd = CharacterDamage(GetCharacterStats(characterTurn), GetCharacterStats(3),1); 
-                target2.Find("Damage").GetComponent<TextMesh>().text = dd.ToString();
+                var damageDone = CharacterDamage(GetCharacterStats(characterTurn), GetCharacterStats(tar2),1); 
+                target2.Find("Damage").GetComponent<TextMesh>().text = damageDone.ToString();
                 target2.Find("Damage").GetComponent<Transform>().gameObject.SetActive(true);
+
+                BattlersList[tar2].StatsInGame.HP -= damageDone;
+
+                if(BattlersList[tar2].StatsInGame.HP<0){
+                    Debug.Log("YOUWIN");
+                }
+
                 
             }
             yield return null;
@@ -509,6 +367,7 @@ public class RTP : MonoBehaviour {
 
     public void ShowSkillAnim(string name, bool val)
     {
+        if(!name.Contains("Enemy"))
         GameObject.Find(name).GetComponent<Transform>().Find("SkillActive").gameObject.SetActive(val);
     }
 
@@ -546,7 +405,7 @@ public class RTP : MonoBehaviour {
 
     public Character GetCharacterStats(int p)
     {
-        return characterList[p];
+        return BattlersList[p];
     }
 
 	public Character GetCharacterTurn(int p)
@@ -564,10 +423,12 @@ public class RTP : MonoBehaviour {
         if(damagetType==1){
             if(attack.StatsInGame.ATK>defense.StatsInGame.DEF){
                 damageDone = attack.StatsInGame.ATK - defense.StatsInGame.DEF;
+                if(damageDone<0) damageDone = 1;
             }
         } else if(damagetType==2){
             if(attack.StatsInGame.MAG>defense.StatsInGame.MDF){
                 damageDone = attack.StatsInGame.MAG - defense.StatsInGame.MDF;
+                if (damageDone < 0) damageDone = 1;
             }
         }
         return damageDone;

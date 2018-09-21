@@ -16,6 +16,8 @@ public class GameController {
     static List<PlayerItem> CharacterItem { get; set; }
 
     static List<Item> Items { get; set; }
+
+    static List<Enemy> Enemies { get; set; }
     
     public GameController()
     {
@@ -99,6 +101,26 @@ public class GameController {
         {
             1
         };
+
+
+        Enemies = new List<Enemy>(){
+            new Enemy(){
+                ID = 1,
+                IsPlayer = false,
+                Name = "Slime",
+                Stats = new Stats()
+                {
+                    HP = 10,
+                    MP = 0,
+                    ATK = 7,
+                    DEF = 2,
+                    MAG = 0,
+                    MDF = 2,
+                    SPE = 1,
+                    LUK = 0
+                }
+            }
+        };
     }
 
     void ItemTest(List<UnityEngine.Sprite> ItemsSprite)
@@ -128,14 +150,7 @@ public class GameController {
 
         #endregion
 
-        CharacterItem = new List<PlayerItem>()
-        {
-           new PlayerItem()
-           {
-                Item = Items[0],
-                Quantity = 10
-           }
-        };
+       
 
         
 
@@ -148,6 +163,11 @@ public class GameController {
 
     public List<Character> GetCharactersList(){
         return Characters;
+    }
+
+    public List<Enemy> GetEnemiesList()
+    {
+        return Enemies;
     }
 
     public List<int> GetCurrentCharactersList(){
