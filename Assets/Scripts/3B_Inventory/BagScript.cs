@@ -33,13 +33,13 @@ public class BagScript : MonoBehaviour {
 		}
 	}
 
-	public bool AddItem(Item item)
+	public bool AddItem(ItemV2 item)
 	{
 		foreach (SlotScript slot in slots)
 		{
 			if (slot.IsEmpty)
 			{
-			//	slot.AddItem(item);
+				slot.AddItem(item);
 
 				return true;
 			}

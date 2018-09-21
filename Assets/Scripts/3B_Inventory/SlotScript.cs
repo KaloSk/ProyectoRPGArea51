@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SlotScript : MonoBehaviour
 {
-	private Stack<Item> items = new Stack<Item>();
+	private Stack<ItemV2> items = new Stack<ItemV2>();
 
 	[SerializeField]
 	private Image icon;
@@ -18,10 +18,10 @@ public class SlotScript : MonoBehaviour
 		}
 	}
 
-	/*public bool AddItem(Item item)
+	public bool AddItem(ItemV2 item)
 	{
 		items.Push(item);
 		icon.sprite = item.MyIcon;
 		return true;
-	}*/
+	}
 }

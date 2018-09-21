@@ -49,6 +49,13 @@ private List <Bag> bags = new List<Bag>();
 		bag.Use();
 		}
 
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            Bag bag = (Bag)Instantiate(items[0]);
+            bag.Initialize(20);
+            AddItem(bag);
+        }
+
 		if(Input.GetKeyDown(KeyCode.B))
 		{
 			InventoryScript.MyInstance.OpenClose();
@@ -68,7 +75,7 @@ private List <Bag> bags = new List<Bag>();
 		}
 	}
 
-	public void AddItem (Item item)
+	public void AddItem (ItemV2 item)
 	{
 		foreach (Bag bag in bags)
 		{
