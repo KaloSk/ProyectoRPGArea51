@@ -1,16 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SlotScript : MonoBehaviour {
+public class SlotScript : MonoBehaviour
+{
+	private Stack<Item> items = new Stack<Item>();
 
-	// Use this for initialization
-	void Start () {
-		
+	[SerializeField]
+	private Image icon;
+
+	public bool IsEmpty
+	{
+		get
+		{
+			return items.Count == 0;
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+	/*public bool AddItem(Item item)
+	{
+		items.Push(item);
+		icon.sprite = item.MyIcon;
+		return true;
+	}*/
 }

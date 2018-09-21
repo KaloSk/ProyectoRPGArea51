@@ -68,6 +68,17 @@ private List <Bag> bags = new List<Bag>();
 		}
 	}
 
+	public void AddItem (Item item)
+	{
+		foreach (Bag bag in bags)
+		{
+			if (bag.MyBagScript.AddItem(item))
+			{
+				return;
+			}
+		}
+	}
+
 	public void OpenClose()
 	{
 		bool closedBag = bags.Find(x => !x.MyBagScript.IsOpen);
