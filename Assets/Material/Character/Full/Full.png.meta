@@ -11,6 +11,7 @@ TextureImporter:
     21300012: Full1
     21300014: Full6
     21300016: Full5
+    21300018: Shop
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -277,6 +278,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3388cfff8da970e42a64ae9010bd5631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shop
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 2446
+        width: 774
+        height: 945
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0b9ae6a771934d4b8163ccf4f49754d
       vertices: []
       indices: 
       edges: []

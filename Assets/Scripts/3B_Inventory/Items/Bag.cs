@@ -10,9 +10,9 @@ using UnityEngine;
 	[SerializeField]
 	private GameObject bagPrefab;
 
-	public Sprite MyIcon{
+	/*public Sprite MyIcon{
 		get;
-	}
+	}*/
 
 
 

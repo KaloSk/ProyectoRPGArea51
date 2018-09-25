@@ -25,7 +25,7 @@ public class ResizeGrid : MonoBehaviour {
             {
                 RectTransform rectTransform = (RectTransform)gameObject.transform;
                 if (ChangeSize == 0)
-                    GridLayoutView.cellSize = new Vector2(rectTransform.rect.width - (rectTransform.rect.width * 0.01f), rectTransform.rect.width / 5f);
+                    GridLayoutView.cellSize = new Vector2(rectTransform.rect.width - (rectTransform.rect.width * 0.03f), rectTransform.rect.width / 4.5f);
                 else if (ChangeSize != -1)
                     GridLayoutView.cellSize = new Vector2(rectTransform.rect.width / (ChangeSize + 0.1f), rectTransform.rect.width / (ChangeSize + 0.6f));
                 ReActive = true;

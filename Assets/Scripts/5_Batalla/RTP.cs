@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RTP : MonoBehaviour {
@@ -41,73 +42,76 @@ public class RTP : MonoBehaviour {
     public List<Sprite> skillSpriteList;
     /*******/
 
-    /*new Skill()
-                {
-                    ID = 1,
-                    Name = "Golpe con mazo",
-                    Damage = 100,
-                    Formula = "ENEMY|DAMAGE|100",
-                    Level = 1,
-                    Icon = skillSpriteList[0],
-                    Type = GameConstants.SKILL_TYPE_FOR_ENEMY
-                },*/
+    int totalEnemy = 1;
+    bool winConditionPlayed = false;
 
     // Use this for initialization
     void Start () {
 
         audioSource = new AudioSource();
         gg = new GameController();
-        var allCharacter = gg.GetCharactersList();
-        var totalCount = 0;
-        var count = 0;
-        foreach(var i in gg.GetCurrentCharactersList()){
-            count++;
-            var o = allCharacter.Find(ch => ch.ID == i);
-            o.TempName = "Player" + count;
-            o.StatsInGame = o.Stats;
-            BattlersList.Add(o);
-            GameObject.Find("Player" + count).GetComponent<CharacterBehaviour>().CharacterArrayID = totalCount;
-            totalCount++;
-        }
 
-        Debug.Log(gg.GetCurrentCharactersList().Count);
-
-        for (var i = count+1; i <= 3; i++)
+        //IF CHARACTERS = NULL ? RETURN INTRO//
+        if (gg.GetAllCharactersList() == null)
         {
-            GameObject.Find("Player" + i).SetActive(false);
+            SceneManager.LoadScene(0);
         }
+        else
+        {
+            //GET CHARACTER LIST//
+            var allCharacter = gg.GetCharactersList();
+            var totalCount = 0;
+            var count = 0;
 
-        var allEnemies = gg.GetEnemiesList();
-        count = 0;
-        foreach(var i in gg.GetEnemiesList()){
-            count++;
-            var o = allEnemies.Find(ch => ch.ID == i.ID);
-            o.TempName = "Enemy" + count;
-            o.StatsInGame = o.Stats;
-            BattlersList.Add(o);
-            GameObject.Find("Enemy" + count).GetComponent<CharacterBehaviour>().CharacterArrayID = totalCount;
-            totalCount++;
+            //LOAD CHARACTER SPRITES & STATS//
+            foreach (var i in gg.GetCurrentCharactersList())
+            {
+                count++;
+                var o = allCharacter.Find(ch => ch.ID == i);
+                o.TempName = "Player" + count;
+                o.StatsInGame = o.Stats;
+                BattlersList.Add(o);
+                GameObject.Find("Player" + count).GetComponent<CharacterBehaviour>().CharacterArrayID = totalCount;
+                GameObject.Find("Player" + count).GetComponent<CharacterBehaviour>().characterSounds = o.Sounds;
+                totalCount++;
+            }
+            //CLEAN NOT USED PLAYERS//
+            for (var i = count + 1; i <= 3; i++) { GameObject.Find("Player" + i).SetActive(false); }
+
+            var allEnemies = gg.GetEnemiesList();
+
+            count = 0;
+
+            //LOAD ENEMIES SPRITES & STATS//
+            foreach (var i in gg.GetEnemiesList())
+            {
+                count++;
+                var o = allEnemies.Find(ch => ch.ID == i.ID);
+                o.TempName = "Enemy" + count;
+                o.StatsInGame = o.Stats;
+                BattlersList.Add(o);
+                GameObject.Find("Enemy" + count).GetComponent<CharacterBehaviour>().CharacterArrayID = totalCount;
+                totalCount++;
+            }
+
+            //CLEAN NOT USED ENEMIES//
+            for (var i = count + 1; i <= 3; i++) { GameObject.Find("Enemy" + i).SetActive(false); }
+
+            //ADD COMMAND BUTTON//
+            for (int i = 0; i < battleMenuButton.Count; i++)
+            {
+                var newi = i + 1;
+                UnityAction<int> action = new UnityAction<int>(ButtonDoAction);
+                battleMenuButton[i].onClick.AddListener(delegate { action.Invoke(newi); });
+            }
+
+            //ORDER TURNS//
+            GenerateOrder();
         }
-
-        Debug.Log("D1: " + BattlersList.Count);
-        
-        for (int i = 0; i < battleMenuButton.Count; i++) {
-            var newi = i+1;
-            UnityAction<int> action = new UnityAction<int>(ButtonDoAction);
-            battleMenuButton[i].onClick.AddListener(delegate { action.Invoke(newi); });
-        }
-
-        if(turn == null) {
-            turn = new List<Character>();
-            turn.AddRange(BattlersList);
-			turn.Sort((first, second) => second.Stats.SPE.CompareTo(first.Stats.SPE));            
-        }
-
     }
     
     bool targetReach = false;
     
-
     Random rnd = new Random();
     bool isDoingAction = true;
     int enemyIsAttacking = 0;
@@ -247,7 +251,17 @@ public class RTP : MonoBehaviour {
 				}
 			}           
         }
-	}
+
+        if (totalEnemy == 0)
+        {
+            if (!winConditionPlayed)
+            {
+                winConditionPlayed = true;
+                StartCoroutine(WinCondition());
+            }
+            
+        }
+    }
 
     int defaultX = -2;
     int defaultY = 3;
@@ -273,11 +287,7 @@ public class RTP : MonoBehaviour {
 		} else if (power.Equals (ACTION_SKILLS)) {
 			transform.Find ("BattlePanel/SkillPanel").GetComponent<Transform> ().gameObject.SetActive (true);
 		} else if (power.Equals (ACTION_RUN)) {
-			GameObject.Find("Player1").GetComponent<Animator>().SetBool("Win", true);
-			GameObject.Find("Player2").GetComponent<Animator>().SetBool("Win", true);
-			GameObject.Find("Player3").GetComponent<Animator>().SetBool("Win", true);
-			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().Stop ();
-			PlaySound (1);
+			
 		}
     }
 
@@ -293,55 +303,51 @@ public class RTP : MonoBehaviour {
 
     #region "ACTIONS"
 
-    /*public void Attack(Transform target1, Transform target2)
+    IEnumerator ShowMessage(string message)
     {
-        if (!stopAction) {
-            float distanceTarget = Vector2.Distance(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position);
-            if (distanceTarget.CompareTo(C_ZERO) != 0) {                
-                target1.position = Vector2.MoveTowards(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position, 7.5f * Time.deltaTime);
-                target1.GetComponent<Animator>().SetBool("Run", true);
-                enemyAttacking = false;
-            }
-            else {
-                targetReach = true;
-            }
 
-            if (targetReach) {
-                targetSelected = 0;
-                battleStatus = 0;
-                target1.GetComponent<Animator>().SetTrigger("DealDamage");
-                target2.Find("Damage").GetComponent<Transform>().gameObject.SetActive(true);                
-                stopAction = true;
-                enemyAttacking = true;
-            }
-        }
-    }*/
+        yield return new WaitForSeconds(2);
 
+        yield return null;
+    }
 
     bool isDoingAnimation = false;
     IEnumerator Attack(Transform target1, Transform target2)
     {
-        ShowSkillAnim(GetCharacterStats(characterTurn).TempName, false);
+
+        var first = GetCharacterStats(characterTurn);
+
+        ShowSkillAnim(first.TempName, false);
 
         while (isDoingAnimation) {
 
-//Debug.Log(stopAction);
-
-            float distanceTarget = Vector2.Distance(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position);
-            if (distanceTarget.CompareTo(C_ZERO) != 0 && !targetReach) {                
-                target1.position = Vector2.MoveTowards(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position, 7.5f * Time.deltaTime);
-                target1.GetComponent<Animator>().SetBool("Run", true);
-                //Debug.Log("ACERCANDONSE");
+            //Debug.Log(stopAction);
+            if (!first.IsRange)
+            {
+                float distanceTarget = Vector2.Distance(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position);
+                if (distanceTarget.CompareTo(C_ZERO) != 0 && !targetReach)
+                {
+                    target1.position = Vector2.MoveTowards(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position, 7.5f * Time.deltaTime);
+                    target1.GetComponent<Animator>().SetBool("Run", true);
+                    //Debug.Log("ACERCANDONSE");
+                }
+                else
+                {
+                    //Debug.Log(target1.name + " llego hacia el " + target2.name);
+                    targetReach = true;
+                }
             }
-            else {
-                //Debug.Log(target1.name + " llego hacia el " + target2.name);
+            else
+            {
                 targetReach = true;
             }
+            
 
             if (targetReach) {
 
                 var tar2 = target2.GetComponent<CharacterBehaviour>().CharacterArrayID;
-
+                var second = GetCharacterStats(tar2);
+                
                 isDoingAnimation = false;
                 targetReach = false;                
                 isDoingAction = true;
@@ -349,14 +355,20 @@ public class RTP : MonoBehaviour {
                 targetSelected = 0;
                 battleStatus = 0;
                 target1.GetComponent<Animator>().SetTrigger("DealDamage");
-                var damageDone = CharacterDamage(GetCharacterStats(characterTurn), GetCharacterStats(tar2),1); 
+                var damageDone = CharacterDamage(first, second, 1); 
                 target2.Find("Damage").GetComponent<TextMesh>().text = damageDone.ToString();
                 target2.Find("Damage").GetComponent<Transform>().gameObject.SetActive(true);
+
+                target2.GetComponent<Animator>().SetTrigger("Hit");
 
                 BattlersList[tar2].StatsInGame.HP -= damageDone;
 
                 if(BattlersList[tar2].StatsInGame.HP<0){
-                    Debug.Log("YOUWIN");
+                    if (!second.IsPlayer)
+                    {
+                        target2.GetComponent<Animator>().SetTrigger("Death");                        
+                    }
+                    totalEnemy--;   
                 }
 
                 
@@ -374,13 +386,29 @@ public class RTP : MonoBehaviour {
     public void ShowEnemyTargets(bool val){
         var enemyList = GameObject.Find("Enemies");
         for(var i = 0; i < enemyList.transform.childCount; i++){
-            enemyList.transform.GetChild(i).GetComponent<Transform>().Find("TargetDamage").gameObject.SetActive(val);
+            var enemy = enemyList.transform.GetChild(i).GetComponent<Transform>();
+            if(enemy.GetComponent<SpriteRenderer>().color.a != 0)
+            {
+                enemyList.transform.GetChild(i).GetComponent<Transform>().Find("TargetDamage").gameObject.SetActive(val);
+            }            
         } 
+    }
+
+    public void Run()
+    {
+        int c = Random.Range(-1, 2);
     }
 
     #endregion
 
     #region "CHANGE TURN"
+
+    public void GenerateOrder()
+    {
+        turn = new List<Character>();
+        turn.AddRange(BattlersList);
+        turn.Sort((first, second) => second.Stats.SPE.CompareTo(first.Stats.SPE));
+    }
 
     public void ChangeTurnMethod()
     {
@@ -394,8 +422,23 @@ public class RTP : MonoBehaviour {
         changeTurn = true;
     }
 
+    IEnumerator WinCondition()
+    {
+        yield return new WaitForSeconds(3);
+        foreach (var i in BattlersList)
+        {
+            if (i.TempName.Contains("Player") && i.Status != -1)
+            {
+                GameObject.Find(i.TempName).GetComponent<Animator>().SetBool("Win", true);
+            }
+        }
+        GameObject.Find("Main Camera").GetComponent<AudioSource>().Stop();
+        PlaySound(1);
+        transform.Find("Victory").GetComponent<Transform>().gameObject.SetActive(true);
+    }
+
     #endregion
-    
+
     #region "GETTER AND SETTERS"
 
     public void SetTargetSelected(int t)

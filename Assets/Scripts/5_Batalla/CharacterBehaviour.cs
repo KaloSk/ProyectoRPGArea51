@@ -56,4 +56,9 @@ public class CharacterBehaviour : MonoBehaviour {
     public void ChangePosition(int i){
 
     }
+
+    public void Death()
+    {
+        Destroy(gameObject);
+    }
 }

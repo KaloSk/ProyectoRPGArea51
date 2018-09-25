@@ -12,19 +12,39 @@ public class StartGame : MonoBehaviour {
     public List<Sprite> CharacterBody;
     public List<GameObject> CharacterAnimator;
 
+    [Header("Skills")]
+    public List<Sprite> SkillSprite;
+
     [Header("Enemies")]
     public List<GameObject> EnemyAnimator;
 
     // Use this for initialization
     void Start () {
 
+        var total = 0;
+
         game = new GameController();
         game.NewGame();
 
-        game.GetCharactersList()[0].Face = CharacterFaces[0];
-        game.GetCharactersList()[0].Full = CharacterBody[0];
-        game.GetCharactersList()[0].Sprite = CharacterAnimator[0].GetComponent<SpriteRenderer>().sprite;
-        game.GetCharactersList()[0].Animator = CharacterAnimator[0].GetComponent<Animator>().runtimeAnimatorController;
+        for(var i = 0; i < game.GetAllCharactersList().Count; i++)
+        {
+            game.GetAllCharactersList()[i].Face = CharacterFaces[i];
+            game.GetAllCharactersList()[i].Full = CharacterBody[i];
+            game.GetAllCharactersList()[i].Sprite = CharacterAnimator[i].GetComponent<SpriteRenderer>().sprite;
+            game.GetAllCharactersList()[i].Animator = CharacterAnimator[i].GetComponent<Animator>().runtimeAnimatorController;
+            game.GetAllCharactersList()[i].Sounds = CharacterAnimator[i].GetComponent<CharacterBehaviour>().characterSounds;
+
+            if (game.GetAllCharactersList()[i].Skills != null)
+            {
+                for (var x = 0; i < game.GetAllCharactersList()[i].Skills.Count; x++)
+                {
+                    game.GetAllCharactersList()[i].Skills[x].Icon = SkillSprite[total];
+                    total++;
+                }
+            }
+        }
+        
+        game.GetCharactersList().Add(game.GetAllCharactersList()[2]);
 
     }
 	
