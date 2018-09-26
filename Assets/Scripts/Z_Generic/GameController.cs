@@ -30,7 +30,6 @@ public class GameController {
 
     public GameController(List<UnityEngine.Sprite> ItemsSprite)
     {
-        ItemTest(ItemsSprite);
     }
 
     public void NewGame(){
@@ -56,7 +55,6 @@ public class GameController {
                     SPE = 5,
                     LUK = 0
                 },
-                
             }
         };
 
@@ -117,13 +115,14 @@ public class GameController {
 
         CurrentCharacters = new List<int>();
         CurrentCharacters.Add(3);
+        CurrentCharacters.Add(1);
 
-        Enemies = new List<Enemy>(){
-            new Enemy(){
+        Enemies = new List<Enemy>{
+            new Enemy{
                 ID = 1,
                 IsPlayer = false,
                 Name = "Slime",
-                Stats = new Stats()
+                Stats = new Stats
                 {
                     HP = 10,
                     MP = 0,
@@ -179,38 +178,6 @@ public class GameController {
 
     }
 
-    void ItemTest(List<UnityEngine.Sprite> ItemsSprite)
-    {
-
-        #region "ITEM TYPE LIST"
-
-        var ItemTypeList = new List<ItemType>
-        {
-            new ItemType()
-            {
-                ID = 1,
-                Name = "Potion",
-                IsWeapon = false,
-                IsArmor = false,
-                IsOther = false
-            },
-            new ItemType()
-            {
-                ID = 2,
-                Name = "Weapon",
-                IsWeapon = true,
-                IsArmor = false,
-                IsOther = false
-            }
-        };
-
-        #endregion
-
-       
-
-        
-
-    }
     /***MONEY***/
     public int GetMoney()
     {
