@@ -4,7 +4,7 @@ using UnityEngine;
 public class Character {
 
     public int ID { get; set; }
-
+    public bool IsRange { get; set; }
     public bool IsPlayer {get;set;}
 
 	public string TempName { get; set; }
@@ -13,6 +13,8 @@ public class Character {
     public string Name { get; set; }
     public string Type { get; set; }
     public Stats Stats { get; set; }
+
+    public int Status { get; set; } 
 
     public Sprite Sprite { get; set; }
     public RuntimeAnimatorController Animator { get; set; }
@@ -27,5 +29,7 @@ public class Character {
 
     public Sprite Face { get; set; }
     public Sprite Full { get; set; }
+
+    public List<AudioClip> Sounds { get; set; }
 
 }

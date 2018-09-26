@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dade528bfa2e740368bf9523b9d86fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indice: 6
+  indice: 1
 --- !u!1 &250312163
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,13 +648,15 @@ MonoBehaviour:
   - {fileID: 21300002, guid: 245619a2817930d4f890d40a25f16646, type: 3}
   - {fileID: 21300004, guid: 245619a2817930d4f890d40a25f16646, type: 3}
   CharacterBody:
-  - {fileID: 21300012, guid: 245619a2817930d4f890d40a25f16646, type: 3}
+  - {fileID: 21300000, guid: c6f593bff973a8143ae094930dc2f81c, type: 3}
   - {fileID: 21300006, guid: 245619a2817930d4f890d40a25f16646, type: 3}
-  - {fileID: 21300010, guid: 245619a2817930d4f890d40a25f16646, type: 3}
+  - {fileID: 21300000, guid: 0dd36fcde244bd145a2e8e339d99c9e3, type: 3}
   CharacterAnimator:
-  - {fileID: 1757418005265400, guid: 4897767273161422994cdcb29c3e2592, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1879130182146964, guid: 1568e2b8dd8d20249b9c6526e59dd8c3, type: 2}
+  - {fileID: 1426988324079842, guid: 8ef50e3f0e2b8244fb6d660c8cfa6835, type: 2}
+  - {fileID: 1939814493637706, guid: b9e250c59d596c04e92e887d9ba270e7, type: 2}
+  SkillSprite: []
+  EnemyAnimator: []
 --- !u!1 &1350782153
 GameObject:
   m_ObjectHideFlags: 0
