@@ -6,7 +6,7 @@ public class TargetAction : MonoBehaviour {
 
     void OnMouseDown()
     {
-        Debug.Log("CHOOSE");
+        //Debug.Log("CHOOSE");
         GameObject.Find("Canvas").GetComponent<RTP>().SetTargetSelected(targetNumber);
     }
 }

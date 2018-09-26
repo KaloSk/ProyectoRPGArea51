@@ -43,7 +43,8 @@ public class StartGame : MonoBehaviour {
                 }
             }
         }
-        
+
+        game.GetCharactersList().Add(game.GetAllCharactersList()[0]);
         game.GetCharactersList().Add(game.GetAllCharactersList()[2]);
 
     }

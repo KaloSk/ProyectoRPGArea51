@@ -23,18 +23,27 @@ public class CharacterBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+
+
         if(!isInitialPosition){
             transform.GetComponent<Animator>().SetBool("Run", true);
             float distanceTarget = Vector2.Distance(transform.position, initialPosition);
             if (distanceTarget.CompareTo(C_ZERO) != 0)
             {
                 transform.position = Vector3.MoveTowards(transform.position, initialPosition, 10 * Time.deltaTime);
+
+//                Debug.Log(transform.name + " ... " + isInitialPosition + " is moving " + distanceTarget.CompareTo(C_ZERO));
+
             }
             else
             {
                 isInitialPosition = true;
                 transform.GetComponent<Animator>().SetBool("Run", false);
                 GameRol.ChangeTurnMethod();
+
+                Debug.Log("CHANGE TURN: " + transform.name);
+
             }
         }
 	}

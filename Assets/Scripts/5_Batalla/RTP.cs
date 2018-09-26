@@ -72,6 +72,8 @@ public class RTP : MonoBehaviour {
                 o.StatsInGame = o.Stats;
                 BattlersList.Add(o);
                 GameObject.Find("Player" + count).GetComponent<CharacterBehaviour>().CharacterArrayID = totalCount;
+                GameObject.Find("Player" + count).GetComponent<SpriteRenderer>().sprite = o.Sprite;
+                GameObject.Find("Player" + count).GetComponent<Animator>().runtimeAnimatorController = o.Animator;
                 GameObject.Find("Player" + count).GetComponent<CharacterBehaviour>().characterSounds = o.Sounds;
                 totalCount++;
             }
@@ -82,14 +84,25 @@ public class RTP : MonoBehaviour {
 
             count = 0;
 
+
+            var enemyLevelList = new List<Enemy>();
+
+            enemyLevelList.Add(allEnemies[0]);
+            enemyLevelList.Add(allEnemies[0]);
+
+            totalEnemy = enemyLevelList.Count;
+
             //LOAD ENEMIES SPRITES & STATS//
-            foreach (var i in gg.GetEnemiesList())
+            foreach (var i in enemyLevelList)
             {
                 count++;
-                var o = allEnemies.Find(ch => ch.ID == i.ID);
-                o.TempName = "Enemy" + count;
-                o.StatsInGame = o.Stats;
-                BattlersList.Add(o);
+                i.TempName = "Enemy" + count;
+                i.StatsInGame = i.Stats;
+                i.StatsInGame.SPE = i.StatsInGame.SPE * count;
+                BattlersList.Add(i);
+
+                Debug.Log(i.TempName + " is " + totalCount);
+
                 GameObject.Find("Enemy" + count).GetComponent<CharacterBehaviour>().CharacterArrayID = totalCount;
                 totalCount++;
             }
@@ -105,6 +118,8 @@ public class RTP : MonoBehaviour {
                 battleMenuButton[i].onClick.AddListener(delegate { action.Invoke(newi); });
             }
 
+            //Debug.Log(BattlersList.Count);
+
             //ORDER TURNS//
             GenerateOrder();
         }
@@ -114,28 +129,38 @@ public class RTP : MonoBehaviour {
     
     Random rnd = new Random();
     bool isDoingAction = true;
+    bool isEnemyDoingAction = false;
     int enemyIsAttacking = 0;
 	// Update is called once per frame
 	void Update () {
 
         var oo = GetCharacterTurn(characterTurn);
 
-        //Debug.Log(oo.IsPlayer);
+        //Debug.Log(oo.TempName + " EIA: " + enemyIsAttacking + " IDA: " + isEnemyDoingAction);
 
-        if (!isDoingAction) {
-            return;
-        }
+        //Debug.Log(turn[2].TempName);
+        //Debug.Log(turn[3].TempName);
 
         if (!oo.IsPlayer){
             //DEFAULT ATTACK//
-            if (!isDoingAnimation && enemyIsAttacking == 0)
+            if (isEnemyDoingAction && enemyIsAttacking == 0)
             {
-                Debug.Log("ENMY IS ATTACKING");
-                isDoingAnimation = true;
-                targetReach = false;
-                isDoingAction = false;
-                enemyIsAttacking = 1;
-                StartCoroutine(Attack(GameObject.Find(GetCharacterTurn(characterTurn).TempName).GetComponent<Transform>(), GameObject.Find(string.Concat("Player", "1")).GetComponent<Transform>()));
+                //var enemyInstance = GetCharacterTurn(characterTurn);
+
+                Debug.Log(oo.TempName + " : " + oo.Stats.HP);
+
+                if(oo.StatsInGame.HP>0){
+                    Debug.Log("ENEMY IS ATTACKING");
+                    isEnemyDoingAction = false;
+                    targetReach = false;
+                    isDoingAction = false;
+                    enemyIsAttacking = 1;
+                    StartCoroutine(Attack(GameObject.Find(oo.TempName).GetComponent<Transform>(), 
+                                          GameObject.Find(string.Concat("Player", "1")).GetComponent<Transform>()));
+                    
+                } else{
+                    ChangeTurnMethod();
+                }
                 //StartCoroutine(Attack(GameObject.Find(string.Concat("Player", "1")).GetComponent<Transform>(), GameObject.Find(GetCharacterTurn(characterTurn).TempName).GetComponent<Transform>()));
             }
         } 
@@ -145,10 +170,10 @@ public class RTP : MonoBehaviour {
             var o = GameObject.Find("Enemies");
             if (battleStatus == 1) { //ATTACK!
 
-                Debug.Log("dd: " + character.TempName);
+                //Debug.Log("dd: " + character.TempName);
 
                 ShowSkillAnim(character.TempName, false);
-                //Debug.Log("ESPERANDO TARGET : TS (" + targetSelected+ ")");
+                Debug.Log("ESPERANDO TARGET : TS (" + targetSelected+ ")");
                 if (targetSelected !=0)
                 {
                     if(isDoingAction)
@@ -311,69 +336,102 @@ public class RTP : MonoBehaviour {
         yield return null;
     }
 
-    bool isDoingAnimation = false;
-    IEnumerator Attack(Transform target1, Transform target2)
-    {
-
-        var first = GetCharacterStats(characterTurn);
-
-        ShowSkillAnim(first.TempName, false);
-
-        while (isDoingAnimation) {
-
-            //Debug.Log(stopAction);
-            if (!first.IsRange)
+    void ReachTarget(Character first, Transform target1, Transform target2){
+        if (!first.IsRange)
+        {
+            float distanceTarget = Vector2.Distance(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position);
+            if (distanceTarget.CompareTo(C_ZERO) != 0 && !targetReach)
             {
-                float distanceTarget = Vector2.Distance(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position);
-                if (distanceTarget.CompareTo(C_ZERO) != 0 && !targetReach)
-                {
-                    target1.position = Vector2.MoveTowards(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position, 7.5f * Time.deltaTime);
-                    target1.GetComponent<Animator>().SetBool("Run", true);
-                    //Debug.Log("ACERCANDONSE");
-                }
-                else
-                {
-                    //Debug.Log(target1.name + " llego hacia el " + target2.name);
-                    targetReach = true;
-                }
+                target1.position = Vector2.MoveTowards(target1.position, target2.Find("TargetPlace").GetComponent<Transform>().position, 7.5f * Time.deltaTime);
+                target1.GetComponent<Animator>().SetBool("Run", true);
             }
             else
             {
                 targetReach = true;
             }
-            
+        }
+        else
+        {
+            targetReach = true;
+        }
 
-            if (targetReach) {
+        Debug.Log("OOOO === OOOO ");
 
-                var tar2 = target2.GetComponent<CharacterBehaviour>().CharacterArrayID;
-                var second = GetCharacterStats(tar2);
-                
-                isDoingAnimation = false;
-                targetReach = false;                
-                isDoingAction = true;
-                //Debug.Log("DEAL DAMAGE");
-                targetSelected = 0;
-                battleStatus = 0;
-                target1.GetComponent<Animator>().SetTrigger("DealDamage");
-                var damageDone = CharacterDamage(first, second, 1); 
-                target2.Find("Damage").GetComponent<TextMesh>().text = damageDone.ToString();
-                target2.Find("Damage").GetComponent<Transform>().gameObject.SetActive(true);
+    }
 
-                target2.GetComponent<Animator>().SetTrigger("Hit");
+    void AttackAnimation(Character first, Transform target1, Transform target2){
+        var tar2 = target2.GetComponent<CharacterBehaviour>().CharacterArrayID;
+        var second = GetCharacterStats(tar2);
 
-                BattlersList[tar2].StatsInGame.HP -= damageDone;
+        targetReach = false;
 
-                if(BattlersList[tar2].StatsInGame.HP<0){
-                    if (!second.IsPlayer)
-                    {
-                        target2.GetComponent<Animator>().SetTrigger("Death");                        
-                    }
-                    totalEnemy--;   
-                }
+        isDoingAction = true;
+        isEnemyDoingAction = true;
 
-                
+        targetSelected = 0;
+        battleStatus = 0;
+        target1.GetComponent<Animator>().SetTrigger("DealDamage");
+        var damageDone = CharacterDamage(first, second, 1);
+        target2.Find("Damage").GetComponent<TextMesh>().text = damageDone.ToString();
+        target2.Find("Damage").GetComponent<Transform>().gameObject.SetActive(true);
+
+        target2.GetComponent<Animator>().SetTrigger("Hit");
+
+        BattlersList[tar2].StatsInGame.HP -= damageDone;
+
+        if (BattlersList[tar2].StatsInGame.HP < 0)
+        {
+
+            Debug.Log(BattlersList[tar2].Name + " takes " + damageDone + " damage");
+
+            if (!second.IsPlayer)
+            {
+                target2.GetComponent<Animator>().SetTrigger("Death");
+                totalEnemy--;
             }
-            yield return null;
+            else
+            {
+                target2.GetComponent<Animator>().SetTrigger("KO");
+            }
+
+        }
+
+    }
+
+    bool isDoingAnimation = false;
+    bool isEnemyDoingAnimation = true;
+    IEnumerator Attack(Transform target1, Transform target2)
+    {
+
+        var first = GetCharacterStats(characterTurn);
+
+        if(first.IsPlayer){
+            ShowSkillAnim(first.TempName, false);
+
+            while (isDoingAnimation)
+            {
+                ReachTarget(first, target1, target2);
+                if (targetReach)
+                {
+                    AttackAnimation(first, target1, target2);
+                    isDoingAnimation = false;
+                }
+                yield return null;
+            }
+        } else {
+
+            Debug.Log("ENEMY WILL ATACK");
+
+            while (isEnemyDoingAnimation)
+            {
+                ReachTarget(first, target1, target2);
+                if (targetReach)
+                {
+                    AttackAnimation(first, target1, target2);
+                    isEnemyDoingAnimation = false;
+                }
+                yield return null;
+            }
         }
     }
 
@@ -408,6 +466,10 @@ public class RTP : MonoBehaviour {
         turn = new List<Character>();
         turn.AddRange(BattlersList);
         turn.Sort((first, second) => second.Stats.SPE.CompareTo(first.Stats.SPE));
+
+        foreach(var o in turn){
+            Debug.Log(o.TempName);
+        }
     }
 
     public void ChangeTurnMethod()
@@ -418,6 +480,8 @@ public class RTP : MonoBehaviour {
         {
             characterTurn = 0;
             enemyIsAttacking = 0;
+            isDoingAction = false;
+            isEnemyDoingAnimation = false;
         }
         changeTurn = true;
     }
@@ -443,6 +507,8 @@ public class RTP : MonoBehaviour {
 
     public void SetTargetSelected(int t)
     {
+        Debug.Log("CHOOSE " + t);
+        isDoingAction = true;
         targetSelected = t;
     }
 
