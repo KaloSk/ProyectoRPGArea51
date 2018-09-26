@@ -62,6 +62,14 @@ private List <Bag> bags = new List<Bag>();
 		}
 	}
 
+	public void UpdateStackSize(IClickable clickable)
+	{
+		if (clickable.MyCount == 0)
+		{
+			clickable.MyIcon.color = new Color(0, 0, 0, 0);
+		}
+	}
+
 	public void AddBag (Bag bag)
 	{ 
 		foreach (BagButton bagButton in bagButtons)
