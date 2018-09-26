@@ -21,6 +21,8 @@ public static InventoryScript MyInstance
 
 private List <Bag> bags = new List<Bag>();
 
+    private Bag selectedBag;
+
 	[SerializeField]
 	private BagButton[] bagButtons;
 
@@ -44,9 +46,7 @@ private List <Bag> bags = new List<Bag>();
 	{
 		if(Input.GetKeyDown(KeyCode.J))
 		{
-		Bag bag = (Bag)Instantiate(items[0]);
-		bag.Initialize(20);
-		bag.Use();
+		
 		}
 
         if(Input.GetKeyDown(KeyCode.K))
@@ -55,11 +55,6 @@ private List <Bag> bags = new List<Bag>();
             bag.Initialize(20);
             AddItem(bag);
         }
-
-		if(Input.GetKeyDown(KeyCode.B))
-		{
-			InventoryScript.MyInstance.OpenClose();
-		}
 	}
 
 	public void UpdateStackSize(IClickable clickable)
@@ -96,16 +91,17 @@ private List <Bag> bags = new List<Bag>();
 
 	public void OpenClose()
 	{
-		bool closedBag = bags.Find(x => !x.MyBagScript.IsOpen);
+        Bag[] openBags = bags.FindAll(x => x.MyBagScript.IsOpen).ToArray();
 
-		foreach (Bag bag in bags)
+        foreach (Bag bag in openBags)
 		{
-			if (bag.MyBagScript.IsOpen != closedBag)
-			{
-				bag.MyBagScript.OpenClose();
-			}
+		    bag.MyBagScript.OpenClose();
 		}
 	}
 
-
+    public void CreateNewBag () {
+        Bag bag = (Bag)Instantiate(items[0]);
+        bag.Initialize(20);
+        bag.Use();
+    }
 }

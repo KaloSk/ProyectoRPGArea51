@@ -34,7 +34,10 @@ public class BagButton : MonoBehaviour, IPointerClickHandler
 	{
 		if (bag != null)
 		{
+            InventoryScript.MyInstance.OpenClose();
 			bag.MyBagScript.OpenClose();
-		}
+        } else {
+            InventoryScript.MyInstance.CreateNewBag();
+        }
 	}
 }
