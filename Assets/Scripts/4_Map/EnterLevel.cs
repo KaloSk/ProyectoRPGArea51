@@ -38,6 +38,10 @@ public class EnterLevel : MonoBehaviour {
         else
         {
             transform.GetComponent<CircleCollider2D>().enabled = true;
+            if (transform.Find("Circle") != null)
+            {
+                transform.Find("Circle").gameObject.SetActive(false);
+            }
         }
         audioSource = new AudioSource();
 

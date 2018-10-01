@@ -24,6 +24,12 @@ public class VictoryBattle : MonoBehaviour {
 
         if(o == gc.GetLastLevel())
         {
+            if (gc.GetLastLevel().Equals(3)) //PHANTON DAGER//
+            {
+                gc.GetCharactersList().Add(gc.GetAllCharactersList()[2]);
+                gc.GetCurrentCharactersList().Add(3);
+            }
+
             gc.IncreaseLevel();
             Debug.Log("LAST LEVEL" + gc.GetLastLevel());
         }

@@ -18,6 +18,9 @@ public class StartGame : MonoBehaviour {
     [Header("Enemies")]
     public List<GameObject> EnemyAnimator;
 
+    [Header("Items")]
+    public List<Sprite> ItemSprites;
+
     // Use this for initialization
     void Start()
     {
@@ -52,6 +55,11 @@ public class StartGame : MonoBehaviour {
             game.GetEnemiesList()[i].Sprite = EnemyAnimator[i].GetComponent<SpriteRenderer>().sprite;
             game.GetEnemiesList()[i].Animator = EnemyAnimator[i].GetComponent<Animator>().runtimeAnimatorController;
             game.GetEnemiesList()[i].Sounds = EnemyAnimator[i].GetComponent<CharacterBehaviour>().characterSounds;
+        }
+
+        for(var i = 0; i  < game.GetItemList().Count; i++)
+        {
+            game.GetItemList()[i].Icon = ItemSprites[game.GetItemList()[i].Type];
         }
     }
 }

@@ -57,6 +57,22 @@ public class RTP : MonoBehaviour {
             var totalCount = 0;
             var count = 0;
 
+            //PRE EVENTS//
+            if (gg.GetOpenLevel().Equals(2))
+            {
+                if (gg.GetCharactersList().Find(o => o.ID == 2) == null)
+                {
+                    Debug.Log("OLD MAN IS ADDED");
+                    gg.GetCharactersList().Add(gg.GetAllCharactersList()[1]);
+                    gg.GetCurrentCharactersList().Add(2);
+                }
+                else
+                {
+                    Debug.Log("OLD MAN CANNOT BE ADDED");
+                }
+            }
+               
+
             //LOAD CHARACTER SPRITES & STATS//
             foreach (var i in gg.GetCurrentCharactersList())
             {
@@ -77,18 +93,27 @@ public class RTP : MonoBehaviour {
             var allEnemies = gg.GetEnemiesList();
 
             count = 0;
-
-
+            
             var enemyLevelList = new List<Enemy>();
 
             if (gg.GetOpenLevel().Equals(1))
             {
                 enemyLevelList.Add(allEnemies[0]);
             }
-            else
+            else if(gg.GetOpenLevel().Equals(2))
             {
                 enemyLevelList.Add(allEnemies[0]);
+                enemyLevelList.Add(allEnemies[1]);
+            }
+            else if (gg.GetOpenLevel().Equals(3))
+            {
                 enemyLevelList.Add(allEnemies[0]);
+            }
+            else if (gg.GetOpenLevel().Equals(4))
+            {
+                enemyLevelList.Add(allEnemies[2]);
+                enemyLevelList.Add(allEnemies[0]);
+                enemyLevelList.Add(allEnemies[1]);
             }
 
             totalEnemy = enemyLevelList.Count;
@@ -97,13 +122,11 @@ public class RTP : MonoBehaviour {
             foreach (var i in enemyLevelList)
             {
                 count++;
-                i.ID = 1000 + count;
                 i.TempName = "Enemy" + count;
                 i.StatsInGame = i.Stats;
-                i.StatsInGame.SPE = i.StatsInGame.SPE * count;
                 BattlersList.Add(i);
 
-                Debug.Log(i.TempName + " is " + totalCount);
+                Debug.Log(i.Name + " has " + i.StatsInGame.HP + " HP");
 
                 GameObject.Find("Enemy" + count).GetComponent<CharacterBehaviour>().CharacterArrayID = totalCount;
                 GameObject.Find("Enemy" + count).GetComponent<SpriteRenderer>().sprite = i.Sprite;
@@ -123,9 +146,7 @@ public class RTP : MonoBehaviour {
                 UnityAction<int> action = new UnityAction<int>(ButtonDoAction);
                 battleMenuButton[i].onClick.AddListener(delegate { action.Invoke(newi); });
             }
-
-            //Debug.Log(BattlersList.Count);
-
+            
             //ORDER TURNS//
             GenerateOrder();
         }

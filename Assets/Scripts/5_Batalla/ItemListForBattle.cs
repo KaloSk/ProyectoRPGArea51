@@ -36,7 +36,7 @@ public class ItemListForBattle : MonoBehaviour {
                 face.name = "ItemShort" + i.Item.ID;
                 face.transform.Find("Text").GetComponent<Text>().text = i.Item.Name;                
                 face.transform.Find("Total/Text").GetComponent<Text>().text = i.Quantity.ToString();
-                //face.transform.GetComponent<Image>().sprite = i.Item.Icon;
+                face.transform.Find("Image").GetComponent<Image>().sprite = i.Item.Icon;
                 face.transform.parent = transform;
 
                 var newi = i.Item.ID;
