@@ -23,6 +23,10 @@ public class GameController {
 
     static List<Enemy> Enemies { get; set; }
 
+    static int LastLevel { get; set; }
+
+    static int OpenLevel { get; set; }
+
     public GameController()
     {
         
@@ -33,6 +37,9 @@ public class GameController {
     }
 
     public void NewGame(){
+
+        LastLevel = 1;
+        OpenLevel = 1;
 
         AllCharacters = new List<Character>
         {
@@ -46,9 +53,9 @@ public class GameController {
                 Formation = 1,
                 Stats = new Stats()
                 {
-                    HP = 8,
+                    HP = 80,
                     MP = 0,
-                    ATK = 5,
+                    ATK = 6,
                     DEF = 9,
                     MAG = 0,
                     MDF = 7,
@@ -68,8 +75,8 @@ public class GameController {
             Formation = 1,
             Stats = new Stats()
             {
-                HP = 4,
-                MP = 6,
+                HP = 40,
+                MP = 60,
                 ATK = 2,
                 DEF = 3,
                 MAG = 6,
@@ -90,7 +97,7 @@ public class GameController {
             Formation = 1,
             Stats = new Stats()
             {
-                HP = 6,
+                HP = 60,
                 MP = 0,
                 ATK = 8,
                 DEF = 3,
@@ -113,26 +120,28 @@ public class GameController {
             }
         });
 
-        CurrentCharacters = new List<int>();
-        CurrentCharacters.Add(3);
-        CurrentCharacters.Add(1);
+        CurrentCharacters = new List<int>
+        {
+            1
+        };
 
         Enemies = new List<Enemy>{
             new Enemy{
-                ID = 1,
+                ID = 100,
                 IsPlayer = false,
                 Name = "Slime",
                 Stats = new Stats
                 {
                     HP = 10,
                     MP = 0,
-                    ATK = 7,
+                    ATK = 12,
                     DEF = 2,
                     MAG = 0,
                     MDF = 2,
                     SPE = 1,
                     LUK = 0
-                }
+                },
+                Money = 100
             }
         };
 
@@ -172,7 +181,7 @@ public class GameController {
 
         #region "MONEY"
 
-        Money = 1000;
+        Money = 2000;
 
         #endregion
 
@@ -225,4 +234,29 @@ public class GameController {
         GroupName = name;
     }
 
+    /******LEVEL*****/
+    public int GetLastLevel()
+    {
+        return LastLevel;
+    }
+
+    public void SetLastLevel(int level)
+    {
+        LastLevel = level;
+    }
+
+    public void IncreaseLevel()
+    {
+        LastLevel++;
+    }
+
+    public int GetOpenLevel()
+    {
+        return OpenLevel;
+    }
+
+    public void SetOpenLevel(int level)
+    {
+        OpenLevel = level;
+    }
 }

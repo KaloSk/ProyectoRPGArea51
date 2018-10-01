@@ -19,14 +19,15 @@ public class StartGame : MonoBehaviour {
     public List<GameObject> EnemyAnimator;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         var total = 0;
 
         game = new GameController();
         game.NewGame();
 
-        for(var i = 0; i < game.GetAllCharactersList().Count; i++)
+        for (var i = 0; i < game.GetAllCharactersList().Count; i++)
         {
             game.GetAllCharactersList()[i].Face = CharacterFaces[i];
             game.GetAllCharactersList()[i].Full = CharacterBody[i];
@@ -45,12 +46,12 @@ public class StartGame : MonoBehaviour {
         }
 
         game.GetCharactersList().Add(game.GetAllCharactersList()[0]);
-        game.GetCharactersList().Add(game.GetAllCharactersList()[2]);
 
+        for (var i = 0; i < game.GetEnemiesList().Count; i++)
+        {
+            game.GetEnemiesList()[i].Sprite = EnemyAnimator[i].GetComponent<SpriteRenderer>().sprite;
+            game.GetEnemiesList()[i].Animator = EnemyAnimator[i].GetComponent<Animator>().runtimeAnimatorController;
+            game.GetEnemiesList()[i].Sounds = EnemyAnimator[i].GetComponent<CharacterBehaviour>().characterSounds;
+        }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

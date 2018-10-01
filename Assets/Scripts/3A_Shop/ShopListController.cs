@@ -12,6 +12,8 @@ public class ShopListController : MonoBehaviour {
 
     public List<AudioClip> BuySoundList;
 
+    public Text MoneyText;
+
     GameController gc = new GameController();
 
     void Start() {        
@@ -38,6 +40,8 @@ public class ShopListController : MonoBehaviour {
                     action.Invoke(newi);
                 });
             }
+            MoneyText.text = gc.GetMoney().ToString()+"G";
+
         }       
     }
 
@@ -73,6 +77,7 @@ public class ShopListController : MonoBehaviour {
                 });
             }
             gc.PayItem(buyThis.Cost);
+            MoneyText.text = gc.GetMoney().ToString() + "G";
         }
     }
     

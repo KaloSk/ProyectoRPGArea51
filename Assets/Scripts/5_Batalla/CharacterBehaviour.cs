@@ -40,17 +40,13 @@ public class CharacterBehaviour : MonoBehaviour {
             {
                 isInitialPosition = true;
                 transform.GetComponent<Animator>().SetBool("Run", false);
-                GameRol.ChangeTurnMethod();
+                GameObject.Find("Canvas").GetComponent<RTP>().ChangeTurnMethod();
 
                 Debug.Log("CHANGE TURN: " + transform.name);
 
             }
         }
 	}
-
-
-
-    public RTP GameRol;
 
     public void returnOriginalPosition(){
         isInitialPosition = false;
