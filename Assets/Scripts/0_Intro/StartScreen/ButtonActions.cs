@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ButtonActions : MonoBehaviour
 {
@@ -15,20 +15,14 @@ public class ButtonActions : MonoBehaviour
     public void Start()
     {
         audioSource = new AudioSource();
+        transform.GetComponent<Button>().onClick.AddListener(OnMouseDown);
     }
 
-    public void OnPlay()
+    public void OnMouseDown()
     {
-        //ultimaEscena = SceneManager.GetActiveScene().buildIndex;
         StartCoroutine(GoToAnother());
     }
-    /*
-    public void ReturnToLast ()
-    {
-        
-        SceneManager.LoadScene(ultimaEscena);
-    }
-    */
+
     IEnumerator GoToAnother()
     {
         PlaySound();

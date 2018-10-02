@@ -22,7 +22,20 @@ public class VictoryBattle : MonoBehaviour {
 
         Debug.Log("CURRENT LEVEL" + o);
 
-        if(o == gc.GetLastLevel())
+
+        foreach (var ch in gc.GetAllCharactersList())
+        {
+            ch.Level++;
+            ch.Stats.HP += ch.StatsByLevel.HP;
+            ch.Stats.MP += ch.StatsByLevel.MP;
+            ch.Stats.ATK += ch.StatsByLevel.ATK;
+            ch.Stats.DEF += ch.StatsByLevel.DEF;
+            ch.Stats.MAG += ch.StatsByLevel.MAG;
+            ch.Stats.MDF += ch.StatsByLevel.MDF;
+            ch.Stats.SPE += ch.StatsByLevel.SPE;
+        }
+
+        if (o == gc.GetLastLevel())
         {
             if (gc.GetLastLevel().Equals(3)) //PHANTON DAGER//
             {
@@ -33,6 +46,8 @@ public class VictoryBattle : MonoBehaviour {
             gc.IncreaseLevel();
             Debug.Log("LAST LEVEL" + gc.GetLastLevel());
         }
+
+
     }
 
     public void PlaySound()

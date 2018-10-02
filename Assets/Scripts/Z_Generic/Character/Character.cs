@@ -13,6 +13,7 @@ public class Character {
     public string Name { get; set; }
     public string Type { get; set; }
     public Stats Stats { get; set; }
+    public Stats StatsByLevel { get; set; }
 
     public int Status { get; set; } 
 

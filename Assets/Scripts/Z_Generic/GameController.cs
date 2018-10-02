@@ -38,8 +38,8 @@ public class GameController {
 
     public void NewGame(){
 
-        LastLevel = 2;
-        OpenLevel = 2;
+        LastLevel = 1;
+        OpenLevel = 1;
 
         AllCharacters = new List<Character>
         {
@@ -62,6 +62,17 @@ public class GameController {
                     SPE = 5,
                     LUK = 0
                 },
+                StatsByLevel = new Stats()
+                {
+                    HP = 50,
+                    MP = 0,
+                    ATK = 5,
+                    DEF = 7,
+                    MAG = 0,
+                    MDF = 6,
+                    SPE = 4,
+                    LUK = 0
+                }
             }
         };
 
@@ -84,7 +95,17 @@ public class GameController {
                 SPE = 4,
                 LUK = 0
             },
-
+            StatsByLevel = new Stats()
+            {
+                HP = 10,
+                MP = 0,
+                ATK = 2,
+                DEF = 5,
+                MAG = 5,
+                MDF = 6,
+                SPE = 3,
+                LUK = 0
+            }
         });
 
         AllCharacters.Add(new Character()
@@ -106,17 +127,16 @@ public class GameController {
                 SPE = 8,
                 LUK = 0
             },
-            Skills = new List<Skill>()
+            StatsByLevel = new Stats()
             {
-                new Skill()
-                {
-                    ID = 1,
-                    Name = "Blind Spot",
-                    Damage = 0,
-                    Formula = "CHARACTER|RAISE|CRITICAL",
-                    Level = 1,                    
-                    Type = GameConstants.SKILL_TYPE_FOR_ENEMY
-                },
+                HP = 25,
+                MP = 0,
+                ATK = 8,
+                DEF = 3,
+                MAG = 0,
+                MDF = 4,
+                SPE = 9,
+                LUK = 0
             }
         });
 
@@ -166,10 +186,10 @@ public class GameController {
                 Name = "King Slime",
                 Stats = new Stats
                 {
-                    HP = 50,
+                    HP = 100,
                     MP = 0,
                     ATK = 30,
-                    DEF = 5,
+                    DEF = 10,
                     MAG = 0,
                     MDF = 10,
                     SPE = 10,
@@ -177,6 +197,25 @@ public class GameController {
                 },
                 Money = 150,
                 IsBoss = true
+            },
+            new Enemy{
+                ID = 104,
+                IsPlayer = false,
+                Name = "?????",
+                IsRange = true,
+                Stats = new Stats
+                {
+                    HP = 30,
+                    MP = 0,
+                    ATK = 35,
+                    DEF = 8,
+                    MAG = 0,
+                    MDF = 10,
+                    SPE = 10,
+                    LUK = 0
+                },
+                Money = 150,
+                IsBoss = false
             }
         };
 
@@ -208,8 +247,7 @@ public class GameController {
 
         ShopItem = new List<Item>()
         {
-            Items[0],Items[1],Items[5],Items[6],Items[7],Items[8],
-            Items[13],Items[14]
+            Items[0],Items[1]
         };
 
         #endregion
@@ -220,6 +258,13 @@ public class GameController {
 
         #endregion
 
+    }
+
+    public void RestartEnemies()
+    {
+        Enemies[0].Stats.HP = 10;
+        Enemies[1].Stats.HP = 15;
+        Enemies[2].Stats.HP = 50;
     }
 
     /***MONEY***/
@@ -267,6 +312,11 @@ public class GameController {
     public List<Item> GetShopItems()
     {
         return ShopItem;
+    }
+
+    public string GetGroupName()
+    {
+        return GroupName;
     }
 
     public void SetGroupName(string name)

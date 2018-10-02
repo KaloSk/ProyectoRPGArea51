@@ -20,10 +20,7 @@ public class RTP : MonoBehaviour {
     int targetCharacterSelected = 0;
 
     float C_ZERO = 0f;
-
-    //public Transform target1;
-    //public Transform target2;
-
+    
     [Header("Characters")]
     public List<GameObject> characterLoadedList;
     List<Character> BattlersList = new List<Character>();
@@ -36,8 +33,10 @@ public class RTP : MonoBehaviour {
     [Header("SoundsMenu")]
     public List<AudioClip> soundList;
 
+    int totalPlayer = 1;
     int totalEnemy = 1;
     bool winConditionPlayed = false;
+    bool loseConditionPlayed = false;
 
     // Use this for initialization
     void Start () {
@@ -52,6 +51,8 @@ public class RTP : MonoBehaviour {
         }
         else
         {
+            gg.RestartEnemies();
+
             //GET CHARACTER LIST//
             var allCharacter = gg.GetCharactersList();
             var totalCount = 0;
@@ -70,6 +71,10 @@ public class RTP : MonoBehaviour {
                 {
                     Debug.Log("OLD MAN CANNOT BE ADDED");
                 }
+            } else if (gg.GetOpenLevel().Equals(4))
+            {
+                GameObject.Find("Main Camera").GetComponent<AudioSource>().Stop();
+                PlaySound(6);
             }
                
 
@@ -90,6 +95,10 @@ public class RTP : MonoBehaviour {
             //CLEAN NOT USED PLAYERS//
             for (var i = count + 1; i <= 3; i++) { GameObject.Find("Player" + i).SetActive(false); }
 
+            totalPlayer = count;
+
+            Debug.Log("Total Player >> " + totalPlayer);
+
             var allEnemies = gg.GetEnemiesList();
 
             count = 0;
@@ -107,7 +116,14 @@ public class RTP : MonoBehaviour {
             }
             else if (gg.GetOpenLevel().Equals(3))
             {
-                enemyLevelList.Add(allEnemies[0]);
+                if(gg.GetCharactersList().Find(o=> o.ID == 3) == null)
+                {
+                    enemyLevelList.Add(allEnemies[3]);
+                }
+                else
+                {
+                    enemyLevelList.Add(allEnemies[0]);
+                }
             }
             else if (gg.GetOpenLevel().Equals(4))
             {
@@ -115,7 +131,7 @@ public class RTP : MonoBehaviour {
                 enemyLevelList.Add(allEnemies[0]);
                 enemyLevelList.Add(allEnemies[1]);
             }
-
+            
             totalEnemy = enemyLevelList.Count;
 
             //LOAD ENEMIES SPRITES & STATS//
@@ -132,6 +148,12 @@ public class RTP : MonoBehaviour {
                 GameObject.Find("Enemy" + count).GetComponent<SpriteRenderer>().sprite = i.Sprite;
                 GameObject.Find("Enemy" + count).GetComponent<Animator>().runtimeAnimatorController = i.Animator;
                 GameObject.Find("Enemy" + count).GetComponent<CharacterBehaviour>().characterSounds = i.Sounds;
+
+                if (i.ID == 104)
+                {
+                    GameObject.Find("Enemy" + count).GetComponent<SpriteRenderer>().flipX = true;
+                    GameObject.Find("Enemy" + count).GetComponent<Transform>().localScale = new Vector3(0.7f, 0.7f, 0);
+                }
 
                 totalCount++;
             }
@@ -162,12 +184,13 @@ public class RTP : MonoBehaviour {
 
         var oo = GetCharacterTurn(characterTurn);
 
-        //Debug.Log(oo.TempName + " EIA: " + enemyIsAttacking + " IDA: " + isEnemyDoingAction);
+        Debug.Log(oo.TempName + " EIA: " + enemyIsAttacking + " IDA: " + isEnemyDoingAction);
 
         //Debug.Log(turn[2].TempName);
         //Debug.Log(turn[3].TempName);
 
         if (!oo.IsPlayer){
+            transform.Find("EnemyTurn").gameObject.SetActive(true);
             //DEFAULT ATTACK//
             if (isEnemyDoingAction && enemyIsAttacking == 0)
             {
@@ -176,13 +199,17 @@ public class RTP : MonoBehaviour {
                 Debug.Log(oo.TempName + " : " + oo.Stats.HP);
 
                 if(oo.StatsInGame.HP>0){
-                    Debug.Log("ENEMY IS ATTACKING");
+                    Debug.Log("ENEMY IS ATTACKING ==> " + oo.TempName);
+                    isEnemyDoingAnimation = true;
                     isEnemyDoingAction = false;
                     targetReach = false;
+
                     isCharacterDoingAction = false;
+                    
                     enemyIsAttacking = 1;
+
                     StartCoroutine(Attack(GameObject.Find(oo.TempName).GetComponent<Transform>(), 
-                                          GameObject.Find(string.Concat("Player", "1")).GetComponent<Transform>()));
+                                          GameObject.Find(string.Concat("Player", GetCharacterRandom().ToString())).GetComponent<Transform>()));
                     
                 } else{
                     ChangeTurnMethod();
@@ -192,6 +219,8 @@ public class RTP : MonoBehaviour {
         } 
         else
         {
+            transform.Find("EnemyTurn").gameObject.SetActive(false);
+
             var character = GetCharacterTurn(characterTurn);
             var o = GameObject.Find("Enemies");
             if (battleStatus.Equals(GameConstants.BS_ATTACK)) { //ATTACK!
@@ -229,7 +258,6 @@ public class RTP : MonoBehaviour {
                     }
                     else if (skillSelected.Type.Equals(GameConstants.SKILL_TYPE_FOR_ALLY))
                     {
-
                     }
                     else if (skillSelected.Type.Equals(GameConstants.SKILL_TYPE_FOR_ENEMY))
                     {
@@ -284,6 +312,8 @@ public class RTP : MonoBehaviour {
                 ShowEnemyTargets(false);
             }
         }
+
+        
         
         /**[DRAW SKILLS]**/
         if (changeTurn)
@@ -320,7 +350,15 @@ public class RTP : MonoBehaviour {
                 winConditionPlayed = true;
                 StartCoroutine(WinCondition());
             }
-            
+
+        }
+        else if(totalPlayer == 0)
+        {
+            if (!loseConditionPlayed)
+            {
+                loseConditionPlayed = true;
+                StartCoroutine(LoseCondition());
+            }
         }
     }
 
@@ -335,6 +373,21 @@ public class RTP : MonoBehaviour {
     }
 
     #region "BATTLE MENU"
+
+    public int GetCharacterRandom()
+    {
+
+        var ran = Random.Range(1, 3);
+
+        var ch = BattlersList.Find(o => o.ID == ran);
+
+        if (ch  == null || ch.Status==-1)
+        {
+            GetCharacterRandom();
+        }
+
+        return 1;
+    }
 
     void ButtonDoAction(int power)
     {
@@ -432,6 +485,8 @@ public class RTP : MonoBehaviour {
             else
             {
                 target2.GetComponent<Animator>().SetTrigger("KO");
+                BattlersList[tar2].Status = -1;
+                totalPlayer--;
             }
 
         }
@@ -458,6 +513,34 @@ public class RTP : MonoBehaviour {
         if (formula[0].Equals(GameConstants.FORMULA_ALLY))
         {
             if (formula[1].Equals("HEAL"))
+            {
+                if (BattlersList[tar].Stats.HP < BattlersList[tar].StatsInGame.HP + int.Parse(formula[2]))
+                {
+                    BattlersList[tar].StatsInGame.HP = BattlersList[tar].Stats.HP;
+                }
+                else
+                {
+                    BattlersList[tar].StatsInGame.HP += int.Parse(formula[2]);
+                }
+                //target.GetComponent<Animator>().SetTrigger("Heal");
+                Debug.Log(BattlersList[tar].TempName + " WILL BE CURE ... " + target.name);
+
+                target.Find("Damage").GetComponent<TextMesh>().text = formula[2].ToString();
+                target.Find("Damage").GetComponent<TextMesh>().color = Color.green;
+                target.Find("Damage").GetComponent<Transform>().gameObject.SetActive(true);
+                gg.GetCharacterItemList().Find(o => o.Item.ID == ItemSelected.ID).Quantity--;
+                var itemTemp = gg.GetCharacterItemList().Find(o => o.Item.ID == ItemSelected.ID);
+                GameObject.Find("ItemShort" + ItemSelected.ID + "/Total/Text").transform.GetComponent<Text>().text = itemTemp.Quantity.ToString();
+                if (itemTemp.Quantity == 0)
+                {
+                    Destroy(GameObject.Find("ItemShort" + ItemSelected.ID));
+                }
+
+                PlaySound(2);
+                ItemSelected = null;
+                ChangeTurnMethod();
+            }
+            else if (formula[1].Equals("HEAL"))
             {
                 if (BattlersList[tar].Stats.HP > BattlersList[tar].StatsInGame.HP + int.Parse(formula[2]))
                 {
@@ -491,15 +574,17 @@ public class RTP : MonoBehaviour {
 
         }
     }
-
+    
     bool isCharacterDoingAnimation = false;
     bool isEnemyDoingAnimation = true;
     IEnumerator Attack(Transform target1, Transform target2)
     {
 
-        var first = GetCharacterStats(characterTurn);
+        var first = GetCharacterTurn(characterTurn);
 
-        if(first.IsPlayer){
+        Debug.Log("WHO??: Attack = " + first.TempName + " => " + first.IsPlayer);
+
+        if (first.IsPlayer){
             ShowSkillAnim(first.TempName, false);
 
             while (isCharacterDoingAnimation)
@@ -514,7 +599,7 @@ public class RTP : MonoBehaviour {
             }
         } else {
 
-            Debug.Log("ENEMY WILL ATACK");
+            Debug.Log("ENEMY WILL ATACK: isEnemyDoingAction = " + isEnemyDoingAction);
 
             while (isEnemyDoingAnimation)
             {
@@ -526,6 +611,17 @@ public class RTP : MonoBehaviour {
                 }
                 yield return null;
             }
+        }
+    }
+
+    IEnumerator SkillHeal(Transform target1)
+    {
+        while (isCharacterDoingAnimation)
+        {
+            Debug.Log("PRE-ITEM2");
+            isCharacterDoingAnimation = false;
+            UsingItem(target1);
+            yield return null;
         }
     }
 
@@ -576,11 +672,13 @@ public class RTP : MonoBehaviour {
         Debug.Log(c);
         if (c.Equals(0))
         {
+            StartCoroutine(ShowMessage("Your Team Flee"));
             PlaySound(GameConstants.SOUND_RUN);
             SceneManager.LoadScene(5);
         }
         else
         {
+            StartCoroutine(ShowMessage("Your Team cannot run"));
             PlaySound(GameConstants.SOUND_CANT_RUN);
             ChangeTurnMethod();
         }
@@ -593,7 +691,13 @@ public class RTP : MonoBehaviour {
     public void GenerateOrder()
     {
         turn = new List<Character>();
-        turn.AddRange(BattlersList);
+        foreach(var bt in BattlersList)
+        {
+            if (bt.StatsInGame.HP > 0)
+            {
+                turn.Add(bt);
+            }
+        }
         turn.Sort((first, second) => second.Stats.SPE.CompareTo(first.Stats.SPE));
 
         LogTurn();
@@ -605,7 +709,11 @@ public class RTP : MonoBehaviour {
 
         //CHANGE TURN//
         characterTurn++;
-        if (characterTurn == turn.Count) characterTurn = 0;
+        if (characterTurn == turn.Count)
+        {
+            characterTurn = 0;
+            GenerateOrder();
+        }
 
         Debug.Log(turn[characterTurn].ID + " - " + turn[characterTurn].Name + " >> ");
 
@@ -618,7 +726,7 @@ public class RTP : MonoBehaviour {
 
     IEnumerator WinCondition()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         foreach (var i in BattlersList)
         {
             if (i.TempName.Contains("Player") && i.Status != -1)
@@ -629,6 +737,14 @@ public class RTP : MonoBehaviour {
         GameObject.Find("Main Camera").GetComponent<AudioSource>().Stop();
         PlaySound(1);
         transform.Find("Victory").GetComponent<Transform>().gameObject.SetActive(true);
+    }
+
+    IEnumerator LoseCondition()
+    {
+        yield return new WaitForSeconds(2);
+        GameObject.Find("Main Camera").GetComponent<AudioSource>().Stop();
+        PlaySound(5);
+        transform.Find("Defeat").GetComponent<Transform>().gameObject.SetActive(true);
     }
 
     #endregion
@@ -683,15 +799,13 @@ public class RTP : MonoBehaviour {
         if(damagetType==1){
             if(attack.StatsInGame.ATK>defense.StatsInGame.DEF){
                 damageDone = attack.StatsInGame.ATK - defense.StatsInGame.DEF;
-                if(damageDone<0) damageDone = 1;
             }
         } else if(damagetType==2){
             if(attack.StatsInGame.MAG>defense.StatsInGame.MDF){
                 damageDone = attack.StatsInGame.MAG - defense.StatsInGame.MDF;
-                if (damageDone < 0) damageDone = 1;
             }
         }
-        return damageDone;
+        return damageDone==0?1:damageDone;
     }
 
     #endregion
