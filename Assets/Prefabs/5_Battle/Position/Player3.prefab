@@ -442,7 +442,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterSounds: []
   CharacterArrayID: -1
-  GameRol: {fileID: 0}
 --- !u!114 &114613143539434324
 MonoBehaviour:
   m_ObjectHideFlags: 1
